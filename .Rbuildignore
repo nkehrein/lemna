@@ -1,0 +1,12 @@
+^lemna\.Rproj$
+^\.Rproj\.user$
+^README\.Rmd$
+^LICENSE\.md$
+^data-raw$
+^dev$
+# any outputs in package directory that may have been created during testing
+^\w*\.png$
+^\w*\.csv$
+^[a-zA-Z0-9_]*\.r$
+^doc$
+^Meta$

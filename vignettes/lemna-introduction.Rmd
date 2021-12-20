@@ -1,0 +1,494 @@
+---
+title: "Introduction to the Lemna package"
+author: "Nils Kehrein"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown_notangle}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7.2,
+  fig.height = 5,
+  fig.align = "center"
+)
+
+# do not build vignette on package checks
+is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
+             "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
+knitr::opts_chunk$set(eval = !is_check)
+```
+
+
+The *lemna* package provides model equations and some useful helpers to
+simulate the growth of *Lemna* (duckweed) aquatic plant populations. 
+*Lemna* is a standard test macrophyte used in ecotox effect studies. The
+model was described and published by the SETAC Europe Interest Group Effect
+Modeling (Klein *et al.* 2021).
+
+The model's main state variable is biomass, or `BM` for short, of the simulated
+*Lemna* population. Growth of *Lemna* is influenced by environmental variables
+such as temperature, irradiation, nutrient concentrations, population density,
+and toxicant concentration in the surrounding medium. To consider the influence
+of toxicants on the plants, a one-compartment model was assumed by the authors for the
+mass-balance of internal toxicant mass. The total amount of internal toxicant
+mass is represented by state-variable `M_int`. The
+combination of state variables `BM` and `M_int` fully describe the state of the
+model system at any point in time.
+
+To simulate a *Lemna* population, one has to define a *scenario* that consists
+of the following data:
+
+- Initial system state
+- A time period to simulate
+- Model parameters
+- Environmental variables
+
+How these scenario elements are represented and which values are chosen depends
+on what one would like to achieve. Simulating the growth of *Lemna* in a controlled
+lab environment will likely require different inputs than *Lemna* growing in an outdoor
+water body, for example.
+
+
+
+## Core functions
+
+To make functions and sample datasets of the *lemna* package available in your
+R workspace, load the library first:
+
+```{r setup}
+library(lemna)
+```
+
+The package function `param_defaults()` provides a list with all suggested 
+default parameters. Some parameter values will be missing, i.e.
+set to `NA`, because they are substance specific and default values would not
+be meaningful for these:
+
+```{r}
+# get list of default parameters
+params <- param_defaults()
+params$k_photo_max
+params$EC50_int # substance specific
+
+# get default parameters and set a custom parameter value
+myparam <- param_defaults(c(EC50_int = 42))
+myparam$EC50_int
+```
+
+
+The growth of a *Lemna* population is simulated using the `lemna()` function. 
+The required scenario data are either supplied individually on function call
+or are passed as a pre-defined scenario object, such as the `metsulfuron` sample
+scenario:
+
+```{r}
+lemna(metsulfuron)
+```
+
+`lemna()` returns a table which describes the change of state variables over time.
+In addition, some supporting derived variables such as internal toxicant concentration
+(`C_int`) and the number of fronds (`FrondNo`) will be returned by default.
+
+A visual description of the simulated scenario and its results can be created
+by running the `plot()` function. The `plot()` function requires a simulation result
+as its first argument:
+
+```{r}
+plot(lemna(metsulfuron))
+```
+
+
+The effect of the toxicant on the *Lemna* population can be calculated using
+the `effect()` function. It requires scenario data the same way as `lemna()`
+does. For the sample `metsulfuron` scenario, the effects of the toxicant
+are as follows:
+
+```{r}
+effect(metsulfuron)
+```
+
+In this scenario, exposure to the toxicant resulted in an 93% decrease of
+population size (`BM`) and a 46% decrease in average growth rate (`r`) until the
+end of the simulation. Effects are always calculated relative to an identical
+control scenario which contains no toxicant exposure.
+
+For more information on the `metsulfuron` sample scenario, please refer to the
+help files:
+
+```{r eval=FALSE}
+?metsulfuron
+```
+
+
+
+## Tutorial
+### Simulate the *Lemna* growth model
+
+To simulate a *Lemna* population, one has to pass the four mandatory scenario
+elements to the `lemna()` function:
+
+```{r}
+# initial state of the model system: 1.0 g dw biomass, 0.0 ug/m2 internal toxicant
+myinit <- c(BM=1, M_int=0)
+# simulated period and output time points: each day for 7 days
+mytimes <- 0:7
+# default model parameters + substance specific values
+myparam <- param_defaults(c(
+  EC50_int = 4.16,
+  b = 0.3,
+  P = 0.0054
+))
+# constant environmental conditions, including exposure
+myenvir <- list(
+  tmp = 18,    # 18 °C ambient temperature
+  irr = 15000, # 15,000  kJ m-2 d-1 irradiance
+  P = 0.3,     # 0.3 mg L-1 Phosphorus concentration
+  N = 0.6,     # 0.6 mg L-1 Nitrogen concentration
+  conc = 1     # 1 ug/L toxicant concentration
+)
+
+lemna(
+  init = myinit,
+  times = mytimes,
+  param = myparam,
+  envir = myenvir
+)
+```
+
+The `init` argument controls at which system state the simulation starts. The 
+`times` argument defines the length of the simulated period and for which
+time points results are returned. The temporal resolution of results can be increased
+by specifying additional output times:
+
+```{r}
+simresult <- lemna(
+  init = myinit,
+  times = seq(0, 7, 0.1), # a step length of 0.1 days = ~2 hours
+  param = myparam,
+  envir = myenvir
+)
+tail(simresult)
+```
+
+The resulting table now contains ten times as much rows because we decreased the
+step length by a factor of ten but simulated the same period, i.e. seven days.
+It can be observed that the state-variables differ slightly at the end of the
+simulation although the scenarios were otherwise identical. The differences
+originate from small numerical errors introduced by the solver of the model's
+Ordinary Differential Equations (ODE). The step-length in time can have influence on
+the precision of simulation results. To decrease the solver's step length
+without increasing the number of result time points, make use of the optional
+argument `hmax`. The smaller `hmax`, the more precise the results:
+
+```{r}
+# hmax=0.01 forces a maximum step length of 0.01 days = ~15 minutes
+lemna(myinit, mytimes, myparam, myenvir, hmax = 0.01)
+```
+
+By default, simulation results contain supporting variables such as
+internal toxicant concentration and total frond number. These are calculated
+from simulation results and model parameters for reasons of convenience. If these
+variables are not required, they can be disabled by setting the optional argument
+`nout = 0`:
+
+```{r}
+lemna(myinit, mytimes, myparam, myenvir, nout = 0)
+```
+
+
+
+
+### Using environmental time-series
+
+The previous examples mostly assumed that environmental variables stay constant in time.
+To simulate a scenario with changing environmental variables, such as a temperature
+curve or exposure pattern, one has to define or load a data time-series. The model
+accepts time-series for all environmental variables, i.e. exposure concentration,
+temperature, irradiation, phosphorus concentration, and nitrogen concentration.
+
+Within the scope of this package, time-series are represented by a 
+`data.frame` containing two numeric columns: the first column for time, the second
+for the variable's value. The column names are irrelevant but sensible names may
+help documenting the data. As an example, the `metsulfuron` sample scenario
+contains a step-function as its exposure time-series: seven days of
+1 ug/L *metsulfuron-methyl* starting at time point zero (`0.0`), followed
+by seven days of recovery (no exposure).
+
+```{r}
+metsulfuron$envir$conc
+```
+
+Time points of the time-series and time points processed by the ODE solver
+may not always match. To derive environmental variable values which are not
+explicitly part of the time-series, variable values are interpolated with a linear
+function.
+If the time-series does not cover the full simulation period, the closest
+value from the time-series is used. In the case of the `metsulfuron` sample
+scenario, the step function will effectively extend to infinity, i.e. any time
+point before day `7.0` will have 1 ug/L of exposure and any time point after
+`7.01` will have no exposure.
+
+As an example, we will modify the `metsulfuron` sample scenario to use an
+exposure time-series that declines linearly between start and day seven:
+
+```{r}
+# define start and end points for the exposure series, the values
+# in between will be interpolated
+myexpo <- data.frame(time=c(0, 7), conc=c(1, 0))
+# modify the sample scenario's exposure series
+myenvir <- metsulfuron$envir
+myenvir$conc <- myexpo
+
+# simulate the sample scenario with modified environmental variables
+plot(lemna(metsulfuron, envir=myenvir))
+```
+
+Time-series and `data.frame` objects can be stored conveniently as `.csv` files
+which can be created and edited by common spreadsheet programs such as *Microsoft
+Excel*. Be aware that the separator character used by *R* and your spreadsheet
+program may differ depending on your computer's locale settings.
+
+```{r, fig.width = 5, fig.height = 4,}
+set.seed(23)
+# define a random time-series, values will be uniformly distributed between
+# the values 0.1 and 3.0, e.g to represent an exposure time-series
+myexpo <- data.frame(time = 0:14,
+                     conc = round(runif(15, 0.1, 3.0), 1))
+# plot the time-series
+plot(myexpo, main="Random exposure time-series")
+lines(myexpo)
+# write data to .csv file in working directory
+write.csv(myexpo, file="random_series.csv", row.names=FALSE)
+# write data using semicolons as separating character
+write.csv2(myexpo, file="random_series2.csv", row.names=FALSE)
+
+# read file from working directory
+myimport <- read.csv(file="random_series.csv")
+# check that written and read data are identical
+myexpo$conc == myimport$conc
+```
+
+Time-series can be imported manually as in the previous example or they can be
+imported automatically by the `lemna()` function for convenience. If an
+environmental variable is set to a string, it will be interpreted as a file path
+and `lemna()` will try to import the time-series using `read.csv()`:
+
+```{r}
+# automatically load the exposure time-series from a file
+myenvir <- metsulfuron$envir
+myenvir$conc <- "random_series.csv"
+
+# simulate the sample scenario with the exposure series loaded from a .csv file
+plot(lemna(metsulfuron, envir=myenvir), legend=FALSE)
+```
+
+```{r, include = FALSE}
+# clean up vignette directory
+file.remove("random_series.csv")
+file.remove("random_series2.csv")
+```
+
+
+For a more complex scenario that uses hourly and daily time-series of
+exposure and temperature/irradiance, respectively, please have a look at
+e.g. the `focusd1` scenario:
+
+```{r, eval=FALSE}
+myenvir <- focusd1$envir
+myenvir$conc
+myenvir$tmp
+myenvir$irr
+```
+
+
+
+### Using simulation results
+
+Simulation results are returned as a table, i.e. a `data.frame` object. The table
+will contain the state variables biomass (`BM`) and internal toxicant mass (`M_int`)
+for each requested output time point. The table may also contain additional
+columns for other supporting variables. The
+data can be processed like any other dataset in *R* to e.g. create plots, derive
+other values, or to perform statistical tests:
+
+```{r}
+myresult <- lemna(focusd1)
+head(myresult)
+```
+
+To get an initial impression of a scenario and its results, simply pass the
+simulation result to the `plot()` function:
+
+```{r}
+plot(myresult)
+```
+
+
+As an example, we will analyze if and how the internal toxicant concentration
+(`C_int`) correlates with the internal toxicant mass (`M_int`):
+
+```{r}
+summary(lm(C_int ~ M_int, myresult))
+```
+
+The linear model indicates a strong correlation of internal toxicant mass
+and concentration which intuitively makes sense. The correlation is not a
+100% because biomass is a confounding factor in the model equations.
+
+
+
+### Derive effect endpoints
+
+To quantify the influence a toxicant exerts on a *Lemna* population, use the
+`effect()` function. It works similar to `lemna()` and accepts the same
+arguments in order to specify a scenario:
+
+```{r}
+# calculate effects on biomass in sample scenario
+effect(metsulfuron)
+```
+
+The return values describe the effect in percent (%) on the respective effect
+endpoint. Effects are calculated relative to a control scenario which exhibits
+no exposure. By default, the effect refers to the reduction in biomass (`BM`) or
+average growth rate (`r`) at the end of the simulation. In the example above,
+biomass was reduced by 93% and the growth rate was reduced by 46% in the *Lemna*
+population due to exposure to the toxicant.
+
+If a scenario covers a long time period but effects are desired for an earlier
+time point, the scenario can be cut short by using the `duration` argument.
+If `duration` is set, the scenario will be clipped to the time period from `t0`
+to `t0 + duration`:
+
+```{r}
+# calculate effects on biomass after 7 days, instead of 14
+effect(metsulfuron, duration=7)
+```
+
+In this example, the effect on biomass is smaller after 7 days compared to the
+effects after 14 days. However, the average growth rate experienced a strong decrease
+from 46 to 71%.
+
+
+
+### Create scenario objects
+
+A *Lemna* growth scenario consists of the following four mandatory scenario
+elements: model parameters, environmental variables, initial state, and output times.
+The elements can be passed to `lemna()` and `effect()` separately or they can be
+combined to a compact scenario object. All sample scenarios which were
+used in this tutorial are scenario objects:
+
+```{r, eval=FALSE}
+# list properties of the sample scenario object
+metsulfuron
+```
+
+Scenario objects are basically just a base *R* `list` object with some additional
+metadata. If correctly defined, scenario objects fully describe a scenario and
+can be passed to e.g. `lemna()` without additional arguments. It is, however,
+possible to override a scenario object's data by passing an alternative
+dataset:
+
+```{r}
+# custom output times and time period:
+# four days with a 12 hour time step
+mytimes <- seq(0, 4, 0.5)
+
+# simulate sample scenario with custom output times & period
+lemna(metsulfuron, times=mytimes)
+```
+
+A custom scenario object can be created by passing the scenario elements to
+`new_lemna_scenario()`:
+
+```{r}
+myscenario <- new_lemna_scenario(
+  init = c(BM=1, M_int=0),
+  times = 0:7,
+  param = param_defaults(c(EC50_int = 4.16, b = 0.3, P = 0.0054)),
+  envir = list(
+    tmp = 18,    # 18 °C ambient temperature
+    irr = 15000, # 15,000  kJ m-2 d-1 irradiance
+    P = 0.3,     # 0.3 mg L-1 Phosphorus concentration
+    N = 0.6,     # 0.6 mg L-1 Nitrogen concentration
+    conc = 1     # 1 ug/L toxicant concentration
+  )
+)
+lemna(myscenario)
+```
+
+
+
+### Speed up simulations with compiled code
+
+The *Lemna* growth model is simulated by default using model equations
+implemented in pure *R*. In case many simulations have to be conducted
+or the time required to get results becomes an issue, the compiled code
+feature can be used. The *lemna* package provides an alternative implementation
+of the *Klein et al.* model equations using *C* code. The *C* code
+executes significantly faster than the pure *R* alternative.
+
+```{r}
+# use model implemented in pure R
+tail(lemna(metsulfuron, ode_mode="r"), n = 1)
+
+# use model implemented in C
+tail(lemna(metsulfuron, ode_mode="c"), n = 1)
+```
+
+
+Simulation results of *R* and *C* code will be identical as far as numerical
+precision allows. The speed increase of using *C* will range from a factor
+of 3 to 5 for short scenarios and up to 50+ for longer scenarios:
+
+```{r}
+# Benchmark the shorter metsulfuron scenario
+microbenchmark::microbenchmark(
+  lemna(metsulfuron, ode_mode="r"),
+  lemna(metsulfuron, ode_mode="c")
+)
+
+# Benchmark the more complex and longer focusd1 scenario
+microbenchmark::microbenchmark(
+  lemna(focusd1, ode_mode="r"),
+  lemna(focusd1, ode_mode="c"),
+  times = 10
+)
+```
+
+There is however a small disadvantage to using the *C* model: if there are
+any issues stemming from, for example, invalid parameters, the error messages
+raised by the *C* code might be less descriptive than those from *R*.
+On the other hand, the *C* code can output on demand almost all intermediary model
+variables which can support debugging and model understanding:
+
+```{r}
+# simulate and request all additional output variables
+lemna(metsulfuron, ode_mode="c", nout=18)
+```
+
+
+
+
+
+
+
+
+
+## References
+- Klein J, Cedergreen N, Heine S, Reichenberger S, Rendal C,
+  Schmitt W, Hommen U. 2021. Refined description of the *Lemna* TKTD growth model
+  based on *Schmitt et al.* (2013) – equation system and default parameters.
+  Report of the working group *Lemna* of the SETAC Europe Interest Group Effect
+  Modeling. Version 1, uploaded on 22. Sept. 2021.
+  https://www.setac.org/group/SEIGEffectModeling

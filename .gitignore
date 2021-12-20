@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+# any outputs in package directory that may have been created during testing
+/*.png
+/*.csv
+/*.r
+/doc/
+/Meta/
+/inst/doc
+/inst/Meta
+/src-i386/
+/src-x64/
