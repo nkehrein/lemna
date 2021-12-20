@@ -26,14 +26,6 @@ model for the aquatic macrophytes \emph{Lemna spp.} was parameterized by the aut
 based on literature data. TK/TD parameters were determined by calibrating the
 model using substance specific effect data of metsulfuron-methyl.
 }
-\section{Literature}{
-\itemize{
-\item Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
-simulating the effect of growth inhibitors on \emph{Lemna} populations. Ecol Model
-255, pp. 1-10. \doi{10.1016/j.ecolmodel.2013.01.017}
-}
-}
-
 \examples{
 # Simulate the example scenario
 lemna(metsulfuron)
@@ -46,5 +38,10 @@ metsulfuron$envir$conc
 
 # Print all environmental variables
 metsulfuron$envir
+}
+\references{
+Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
+simulating the effect of growth inhibitors on \emph{Lemna} populations. Ecol Model
+255, pp. 1-10. \doi{10.1016/j.ecolmodel.2013.01.017}
 }
 \keyword{datasets}

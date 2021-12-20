@@ -20,12 +20,9 @@ followed by seven days of recovery.
 The dataset was presented in Schmitt \emph{et al.} (2013),
 cf. Figure 2, and was included in this package by courtesy of the authors.
 }
-\section{Literature}{
-\itemize{
-\item Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
+\references{
+Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
 simulating the effect of growth inhibitors on \emph{Lemna} populations. Ecol Model
 255, pp. 1-10. \doi{10.1016/j.ecolmodel.2013.01.017}
 }
-}
-
 \keyword{datasets}

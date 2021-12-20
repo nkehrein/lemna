@@ -20,14 +20,11 @@ followed by twelve days of recovery.
 The dataset was presented in Hommen \emph{et al.} (2015)],
 cf. Figure 3, and was included in this package by courtesy of the authors.
 }
-\section{Literature}{
-\itemize{
-\item Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
+\references{
+Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
 Ochoa-Acuña H, van Vliet P, Arts G. 2015. How TK-TD and Population Models for
 Aquatic Macrophytes Could Support the Risk Assessment for Plant Protection
 Products. Integr Environ Assess Manag 12(1), pp. 82-95.
 \doi{10.1002/ieam.1715}
 }
-}
-
 \keyword{datasets}

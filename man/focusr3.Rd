@@ -25,18 +25,15 @@ The scenario setup was published by Hommen \emph{et al}. (2015). Exposure patter
 and substance specific parameters are of exemplary character
 and represent the herbicide \emph{metsulfuron-methyl}.
 }
-\section{Literature}{
-\itemize{
-\item Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
+\examples{
+# Simulate the example scenario
+lemna(focusr3)
+}
+\references{
+Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
 Ochoa-Acuña H, van Vliet P, Arts G. 2015. How TK-TD and Population Models for
 Aquatic Macrophytes Could Support the Risk Assessment for Plant Protection
 Products. Integr Environ Assess Manag 12(1), pp. 82-95.
 \doi{10.1002/ieam.1715}
-}
-}
-
-\examples{
-# Simulate the example scenario
-lemna(focusr3)
 }
 \keyword{datasets}

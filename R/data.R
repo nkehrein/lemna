@@ -14,8 +14,8 @@
 #' based on literature data. TK/TD parameters were determined by calibrating the
 #' model using substance specific effect data of metsulfuron-methyl.
 #'
-#' # Literature
-#'   - Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
+#' @references
+#' Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
 #'   simulating the effect of growth inhibitors on *Lemna* populations. Ecol Model
 #'   255, pp. 1-10. \doi{10.1016/j.ecolmodel.2013.01.017}
 #'
@@ -43,8 +43,8 @@
 #' The dataset was presented in Schmitt *et al.* (2013),
 #' cf. Figure 2, and was included in this package by courtesy of the authors.
 #'
-#' # Literature
-#'   - Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
+#' @references
+#' Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
 #'   simulating the effect of growth inhibitors on *Lemna* populations. Ecol Model
 #'   255, pp. 1-10. \doi{10.1016/j.ecolmodel.2013.01.017}
 "schmitt77"
@@ -59,8 +59,8 @@
 #' The dataset was presented in Hommen *et al.* (2015)],
 #' cf. Figure 3, and was included in this package by courtesy of the authors.
 #'
-#' # Literature
-#'   - Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
+#' @references
+#' Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
 #'   Ochoa-Acuña H, van Vliet P, Arts G. 2015. How TK-TD and Population Models for
 #'   Aquatic Macrophytes Could Support the Risk Assessment for Plant Protection
 #'   Products. Integr Environ Assess Manag 12(1), pp. 82-95.
@@ -83,8 +83,8 @@
 #' and substance specific parameters are of exemplary character
 #' and represent the herbicide *metsulfuron-methyl*.
 #'
-#' # Literature
-#'   - Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
+#' @references
+#' Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
 #'   Ochoa-Acuña H, van Vliet P, Arts G. 2015. How TK-TD and Population Models for
 #'   Aquatic Macrophytes Could Support the Risk Assessment for Plant Protection
 #'   Products. Integr Environ Assess Manag 12(1), pp. 82-95.
@@ -110,8 +110,8 @@
 #' and substance specific parameters are of exemplary character
 #' and represent the herbicide *metsulfuron-methyl*.
 #'
-#' # Literature
-#'   - Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
+#' @references
+#' Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
 #'   Ochoa-Acuña H, van Vliet P, Arts G. 2015. How TK-TD and Population Models for
 #'   Aquatic Macrophytes Could Support the Risk Assessment for Plant Protection
 #'   Products. Integr Environ Assess Manag 12(1), pp. 82-95.
@@ -137,8 +137,8 @@
 #' and substance specific parameters are of exemplary character
 #' and represent the herbicide *metsulfuron-methyl*.
 #'
-#' # Literature
-#'   - Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
+#' @references
+#' Hommen U, Schmitt W, Heine S, Brock Theo CM, Duquesne S, Manson P, Meregalli G,
 #'   Ochoa-Acuña H, van Vliet P, Arts G. 2015. How TK-TD and Population Models for
 #'   Aquatic Macrophytes Could Support the Risk Assessment for Plant Protection
 #'   Products. Integr Environ Assess Manag 12(1), pp. 82-95.

@@ -584,8 +584,10 @@ over the course of the simulated year. Achieved biomass levels are nevertheless 
 similar in both models. The perceived differences seem to originate from the fact
 that model results are slightly shifted in time. This observation can be explained
 by the photosynthesis response function of the *Klein et al.* model, where growth
-is controlled by the most limiting factor. This allows the population to react
-quicker to changing environmental conditions. Generally, both models generate
+is controlled by the most limiting factor. Unlike the *Schmitt et al.* model,
+where all response functions are multiplied. This allows the population to react
+quicker to changing environmental conditions and achieve slightly larger biomass
+in the *Klein et al.* model. Generally, both models generate
 similar growth dynamics.
 
 
