@@ -33,13 +33,11 @@ published by Schmitt *et al.* (2013).
 ## Installation
 
 ```{r, eval=FALSE}
+# install directly from CRAN
+install.packages("lemna")
 
-# install newest version from GitHub
+# install latest development version from GitHub
 devtools::install_github("nkehrein/lemna")
-
-#### in preparation: not yet functional ####
-## install directly from CRAN
-#install.packages("lemna")
 ```
 
 ## Usage
