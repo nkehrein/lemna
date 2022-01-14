@@ -92,6 +92,7 @@
 #' @return `data.frame` with simulation results
 #' @importFrom stats approxfun
 #' @importFrom utils read.csv
+#' @importFrom deSolve ode
 #' @export
 #' @examples
 #' # Simulate the metsulfuron example scenario
@@ -218,7 +219,7 @@ lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mo
     rm(nm, v) # clean up namespace
 
     # call ODE solver
-    out <- as.data.frame(deSolve::ode(y=init, times=times, func=lemna_ode, parms=param, ...))
+    out <- as.data.frame(ode(y=init, times=times, func=lemna_ode, parms=param, ...))
 
     # additional output variables requested?
     # -> emulate (parts of) the behavior of the compiled ODE solver
@@ -246,10 +247,10 @@ lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mo
     # interpolation settings
     fcontrol <- list(method="linear", rule=2, f=0, ties="ordered")
     # call solver
-    out <- deSolve::ode(y=init, times=times, parms=param, forcings=envir,
-                        dllname="lemna", initfunc="lemna_init", func="lemna_func",
-                        initforc="lemna_forc", fcontrol=fcontrol, nout=nout,
-                        outnames=outnames, ...)
+    out <- ode(y=init, times=times, parms=param, forcings=envir,
+                dllname="lemna", initfunc="lemna_init", func="lemna_func",
+                initforc="lemna_forc", fcontrol=fcontrol, nout=nout,
+                outnames=outnames, ...)
     out <- as.data.frame(out)
   }
   else {
@@ -285,6 +286,28 @@ lemna.lemna_scenario <- function(x, init, times, param, envir, ...) {
   }
 
   lemna.default(init=init, times=times, param=param, envir=envir, ...)
+}
+
+#' Full access to ODE solver
+#'
+#' This function can be used by external packages to access the ODE implemented
+#' in C without the surrounding sanity checks and data loading procedures.
+#' All parameters will be passed on to the solver. This structure may help
+#' avoiding CMD CHECK messages.
+#'
+#' @param nout optional `numerical`, number of additional output variables,
+#'    defaults to two
+#' @param ... additional parameters passed on to [deSolve::ode()]
+#' @return result from [deSolve::ode()]
+#' @export
+lemna_desolve <- function(nout=2, ...) {
+  # set names of additional output variables
+  outnames <- c("C_int", "FrondNo", "f_loss", "f_photo", "fT_photo", "fI_photo",
+                "fP_photo", "fN_photo", "fBM_photo", "fCint_photo", "C_int_unb",
+                "C_ext", "Tmp", "Irr", "Phs", "Ntr", "dBM", "dM_int")
+
+  ode(dllname="lemna", initfunc="lemna_init", func="lemna_func",
+     initforc="lemna_forc", nout=nout, outnames=outnames, ...)
 }
 
 # Prepare environmental factor time series
