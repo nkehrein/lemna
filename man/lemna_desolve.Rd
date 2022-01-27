@@ -2,15 +2,12 @@
 % Please edit documentation in R/lemna.R
 \name{lemna_desolve}
 \alias{lemna_desolve}
-\title{Full access to ODE solver}
+\title{Access to the ODE solver}
 \usage{
-lemna_desolve(nout = 2, ...)
+lemna_desolve(...)
 }
 \arguments{
-\item{nout}{optional \code{numerical}, number of additional output variables,
-defaults to two}
-
-\item{...}{additional parameters passed on to \code{\link[deSolve:ode]{deSolve::ode()}}}
+\item{...}{parameters passed on to \code{\link[deSolve:ode]{deSolve::ode()}}}
 }
 \value{
 result from \code{\link[deSolve:ode]{deSolve::ode()}}
@@ -18,6 +15,5 @@ result from \code{\link[deSolve:ode]{deSolve::ode()}}
 \description{
 This function can be used by external packages to access the ODE implemented
 in C without the surrounding sanity checks and data loading procedures.
-All parameters will be passed on to the solver. This structure may help
-avoiding CMD CHECK messages.
+All parameters will be passed on to the solver.
 }

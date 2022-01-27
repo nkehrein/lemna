@@ -9,4 +9,5 @@
 ^\w*\.csv$
 ^[a-zA-Z0-9_]*\.r$
 ^doc$
+^docs$
 ^Meta$

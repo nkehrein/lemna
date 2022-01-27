@@ -5,50 +5,59 @@
 #' ## Model parameters
 #'
 #' ### Growth model
-#' - Model switch for unlimited growth conditions, `k_photo_fixed` (TRUE/FALSE)
-#' - Maximum photosynthesis rate, `k_photo_max` (d-1)
-#' - Reference loss rate, `k_loss` (d-1)
-#' - Lower biomass abundance threshold, `BM_threshold` (g dw m-2)
-#' - Reservoir for biomass recovery, `BM_min` (g dw m-2)
+#' - `k_photo_fixed`, Model switch for unlimited growth conditions (TRUE/FALSE)
+#' - `k_photo_max`, Maximum photosynthesis rate (d-1)
+#' - `k_loss`, Reference loss rate (d-1)
+#' - `BM_threshold`, Lower biomass abundance threshold (g dw m-2)
+#' - `BM_min`, Reservoir for biomass recovery (g dw m-2)
 #'
 #' ### Temperature response of photosynthesis
-#' - Optimum growth temperature, `T_opt` (°C)
-#' - Minimum growth temperature, `T_min` (°C)
-#' - Maximum growth temperature, `T_max` (°C)
+#' - `T_opt`, Optimum growth temperature (deg C)
+#' - `T_min`, Minimum growth temperature (deg C)
+#' - `T_max`, Maximum growth temperature (deg C)
 #'
 #' ### Temperature response of biomass loss rate
-#' - Temperature coefficient, `Q10` (-)
-#' - Reference temperature for response=1, `T_ref` (°C)
+#' - `Q10`, Temperature coefficient (-)
+#' - `T_ref`, Reference temperature for response=1 (°C)
 #'
 #' ### Irradiance reponse of photosynthesis
-#' - Slope of irradiance response, `alpha` (m2 d kJ-1)
-#' - Intercept of irradiance response, `beta` (-)
+#' - `alpha`, Slope of irradiance response (m2 d kJ-1)
+#' - `beta`, Intercept of irradiance response (-)
 #'
 #' ### Nutrient response of photosynthesis
-#' - Half-saturation constant of Nitrogen, `N_50` (mg N L-1)
-#' - Half-saturation constant of Phosphorus, `P_50` (mg P L-1)
+#' - `N_50`, Half-saturation constant of Nitrogen (mg N L-1)
+#' - `P_50`, Half-saturation constant of Phosphorus (mg P L-1)
 #'
 #' ### Density dependence of photosynthesis
-#' -  Carrying capacity, `BM_L` (g dw m-2)
+#' - `BM_L`, Carrying capacity (g dw m-2)
 #'
 #' ### Concentration response (Toxicodynamics)
-#' - Internal concentration resulting in 50% effect, `EC50_int` (ug L-1)
-#' - Maximum inhibition c, `E_max` (-)
-#' - Slope parameter, `b` (-)
+#' - `EC50_int`, Internal concentration resulting in 50% effect (mass per volume)
+#' - `E_max`, Maximum inhibition (-)
+#' - `b`, Slope parameter (-)
 #'
 #' ### Internal concentration (Toxicokinetics)
-#' - Permeability, `P` (cm d-1)
-#' - Area per dry-weight ratio, `r_A_DW` (cm2 g-1)
-#' - Fresh weight per dry weight ratio, `r_FW_DW` (-)
-#' - Fresh weight density, `r_FW_V` (g cm-3)
-#' - Dry weight per frond ratio, `r_DW_FN` (g dw)
-#' - Partitioning coefficient plant:water, `K_pw` (-)
-#' - Metabolisation rate, `k_met` (d-1)
+#' - `P`, Permeability (cm d-1)
+#' - `r_A_DW`, Area per dry-weight ratio (cm2 g-1)
+#' - `r_FW_DW`, Fresh weight per dry weight ratio (-)
+#' - `r_FW_V`, Fresh weight density (g cm-3)
+#' - `r_DW_FN` Dry weight per frond ratio (g dw)
+#' - `K_pw`, Partitioning coefficient plant:water (-)
+#' - `k_met`, Metabolisation rate (d-1)
 #'
 #' @param values optional named numeric `vector`, values will override any
 #'   defaults
 #' @return named `list`
 #' @export
+#'
+#' @references
+#' Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
+#'   Schmitt W., Hommen U., 2021: Refined description of the *Lemna* TKTD growth model
+#'   based on *Schmitt et al.* (2013) – equation system and default parameters.
+#'   Report of the working group *Lemna* of the SETAC Europe Interest Group Effect
+#'   Modeling. Version 1, uploaded on 22. Sept. 2021.
+#'   <https://www.setac.org/group/SEIGEffectModeling>
+#'
 #' @examples
 #' # Returns default model parameters, some parameters are not defined (NA)
 #' param_defaults()
@@ -75,9 +84,9 @@ param_defaults <- function(values) {
     BM_min = 0,            # reservoir for biomass recovery (g dw m-2)
 
     # response parameters
-    T_opt = 26.7,   # optimum growth temperature (°C)
-    T_min = 8,      # minimum growth temperature (°C)
-    T_max = 40.5,   # maximum growth temperature (°C)
+    T_opt = 26.7,   # optimum growth temperature (deg C)
+    T_min = 8,      # minimum growth temperature (deg C)
+    T_max = 40.5,   # maximum growth temperature (deg C)
     Q10 = 2,        # temperature coefficient (-)
     T_ref = 25,     # ref temperature for response=1 (°C)
     alpha = 5e-5,   # slope of irradiance response of photosynthesis (m2 d kJ-1)

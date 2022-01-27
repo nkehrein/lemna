@@ -50,17 +50,23 @@ parameters, environmental factor time series, output time points, and other
 settings. Numerical integration is handled by \code{\link[deSolve:lsoda]{deSolve::lsoda()}} by default
 which is well suited to handle stiff and non-stiff numerical problems.
 }
-\details{
-\subsection{Initial state}{
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: All scenario parameters supplied as arguments
+
+\item \code{lemna_scenario}: Scenario parameters supplied as a \code{lemna_scenario} object
+}}
+
+\section{State variables}{
 
 The model has two state variables:
 \itemize{
-\item Biomass, \code{BM} (g dw m-2)
-\item Mass of toxicant in plant population, \code{M_int} (mass per m2, e.g. ug m-2)
+\item \code{BM}, Biomass  (g dw m-2)
+\item \code{M_int}, Mass of toxicant in plant population  (mass per m2, e.g. ug m-2)
 }
 }
 
-\subsection{Output times}{
+\section{Output times}{
 
 The function will only return results for the requested time points. The solver
 may make additional time steps which are not returned, depending on the
@@ -70,13 +76,13 @@ results. Please refer to the manual of the \link{deSolve} package for more
 information on that topic.
 }
 
-\subsection{Parameters}{
+\section{Parameters}{
 
 The list of available model parameters, their units, and suggested default
 values is documented in \code{\link[=param_defaults]{param_defaults()}}.
 }
 
-\subsection{Environmental variables}{
+\section{Environmental variables}{
 
 The model requires a time series for each of the five environmental variables
 For ease of use, a time series can be represented by either a constant
@@ -86,11 +92,11 @@ returning a value for a certain time point.
 
 The five environmental variables are as follows:
 \itemize{
-\item Exposure concentration, \code{conc} (mass per volume, e.g ug L-1)
-\item Temperature, \code{tmp} (°C)
-\item Irradiance, \code{irr} (kJ m-2 d-1)
-\item Phosphorus concentration, \code{P} (mg P L-1)
-\item Nitrogen concentration, \code{N} (mg N L-1)
+\item \code{conc}, Exposure concentration (mass per volume, e.g ug L-1)
+\item \code{tmp}, Temperature (deg C)
+\item \code{irr}, Irradiance (kJ m-2 d-1)
+\item \code{P}, Phosphorus concentration  (mg P L-1)
+\item \code{N}, Nitrogen concentration  (mg N L-1)
 }
 
 A \code{data.frame} containing a time series must consist of exactly two columns:
@@ -113,7 +119,7 @@ represents time and must return a single scalar value. Using a function
 in combination with the compiled code solver will raise an error.
 }
 
-\subsection{R vs. compiled code}{
+\section{R vs. compiled code}{
 
 The model can be simulated using pure \emph{R} code (the default) or an implementation
 that uses the compiled code feature of \link{deSolve}. Compiled code is almost
@@ -125,7 +131,7 @@ short as possible and as long as needed.
 To use the compiled code feature, set the argument \code{ode_mode = "c"}.
 }
 
-\subsection{Additional outputs}{
+\section{Simulation output}{
 
 For reasons of convenience, the return value contains by default two additional
 variables derived from simulation results: the internal concentration \code{C_int}
@@ -137,14 +143,47 @@ represent intermediary variables, environmental variables, and derivatives
 calculated within the model equations. Please refer to the model description
 of \emph{Klein et al.} for more information on these variables and how they
 influence model behavior.
-}
-}
-\section{Methods (by class)}{
-\itemize{
-\item \code{default}: All scenario parameters supplied as arguments
 
-\item \code{lemna_scenario}: Scenario parameters supplied as a \code{lemna_scenario} object
-}}
+The available output levels are as follows:
+\itemize{
+\item \code{nout >= 1}
+\itemize{
+\item \code{C_int}, internal concentration (mass per volume)
+}
+\item \code{nout >= 2}
+\itemize{
+\item \code{FrondNo}, frond number (-)
+}
+\item \code{nout >= 4}
+\itemize{
+\item \code{f_loss}, respiration dependency function (-)
+\item \code{f_photo}, photosynthesis dependency function (-)
+}
+\item \code{nout >= 10}
+\itemize{
+\item \code{fT_photo}, temperature response of photosynthesis (-)
+\item \code{fI_photo}, irradiance response of photosynthesis (-)
+\item \code{fP_photo}, phosphorus response of photosynthesis (-)
+\item \code{fN_photo}, nitrogen response of photosynthesis (-)
+\item \code{fBM_photo}, density response of photosynthesis (-)
+\item \code{fCint_photo}, concentration response of photosynthesis (-)
+}
+\item \code{nout >= 16}
+\itemize{
+\item \code{C_int_unb}, unbound internal concentration (mass per volume)
+\item \code{C_ext}, external concentration (mass per volume)
+\item \code{Tmp}, temperature (deg C)
+\item \code{Irr}, irradiance (kJ m-2 d-1)
+\item \code{Phs}, Phosphorus concentration (mg P L-1)
+\item \code{Ntr}, Nitrogen concentration (mg N L-1)
+}
+\item \code{nout >= 18}
+\itemize{
+\item \code{dBM}, biomass derivative (g dw m-2 d-1)
+\item \code{dM_int}, mass of toxicant in plants derivative (mass per m2 d-1)
+}
+}
+}
 
 \examples{
 # Simulate the metsulfuron example scenario
@@ -209,4 +248,12 @@ scenario <- new_lemna_scenario(
  envir = myenvir
 )
 lemna(scenario)
+}
+\references{
+Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
+Schmitt W., Hommen U., 2021: Refined description of the \emph{Lemna} TKTD growth model
+based on \emph{Schmitt et al.} (2013) – equation system and default parameters.
+Report of the working group \emph{Lemna} of the SETAC Europe Interest Group Effect
+Modeling. Version 1, uploaded on 22. Sept. 2021.
+\url{https://www.setac.org/group/SEIGEffectModeling}
 }

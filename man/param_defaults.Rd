@@ -23,66 +23,66 @@ Returns the default Lemna model parameters as reported by Klein et al. (2021).
 \subsection{Model parameters}{
 \subsection{Growth model}{
 \itemize{
-\item Model switch for unlimited growth conditions, \code{k_photo_fixed} (TRUE/FALSE)
-\item Maximum photosynthesis rate, \code{k_photo_max} (d-1)
-\item Reference loss rate, \code{k_loss} (d-1)
-\item Lower biomass abundance threshold, \code{BM_threshold} (g dw m-2)
-\item Reservoir for biomass recovery, \code{BM_min} (g dw m-2)
+\item \code{k_photo_fixed}, Model switch for unlimited growth conditions (TRUE/FALSE)
+\item \code{k_photo_max}, Maximum photosynthesis rate (d-1)
+\item \code{k_loss}, Reference loss rate (d-1)
+\item \code{BM_threshold}, Lower biomass abundance threshold (g dw m-2)
+\item \code{BM_min}, Reservoir for biomass recovery (g dw m-2)
 }
 }
 
 \subsection{Temperature response of photosynthesis}{
 \itemize{
-\item Optimum growth temperature, \code{T_opt} (°C)
-\item Minimum growth temperature, \code{T_min} (°C)
-\item Maximum growth temperature, \code{T_max} (°C)
+\item \code{T_opt}, Optimum growth temperature (deg C)
+\item \code{T_min}, Minimum growth temperature (deg C)
+\item \code{T_max}, Maximum growth temperature (deg C)
 }
 }
 
 \subsection{Temperature response of biomass loss rate}{
 \itemize{
-\item Temperature coefficient, \code{Q10} (-)
-\item Reference temperature for response=1, \code{T_ref} (°C)
+\item \code{Q10}, Temperature coefficient (-)
+\item \code{T_ref}, Reference temperature for response=1 (°C)
 }
 }
 
 \subsection{Irradiance reponse of photosynthesis}{
 \itemize{
-\item Slope of irradiance response, \code{alpha} (m2 d kJ-1)
-\item Intercept of irradiance response, \code{beta} (-)
+\item \code{alpha}, Slope of irradiance response (m2 d kJ-1)
+\item \code{beta}, Intercept of irradiance response (-)
 }
 }
 
 \subsection{Nutrient response of photosynthesis}{
 \itemize{
-\item Half-saturation constant of Nitrogen, \code{N_50} (mg N L-1)
-\item Half-saturation constant of Phosphorus, \code{P_50} (mg P L-1)
+\item \code{N_50}, Half-saturation constant of Nitrogen (mg N L-1)
+\item \code{P_50}, Half-saturation constant of Phosphorus (mg P L-1)
 }
 }
 
 \subsection{Density dependence of photosynthesis}{
 \itemize{
-\item Carrying capacity, \code{BM_L} (g dw m-2)
+\item \code{BM_L}, Carrying capacity (g dw m-2)
 }
 }
 
 \subsection{Concentration response (Toxicodynamics)}{
 \itemize{
-\item Internal concentration resulting in 50\% effect, \code{EC50_int} (ug L-1)
-\item Maximum inhibition c, \code{E_max} (-)
-\item Slope parameter, \code{b} (-)
+\item \code{EC50_int}, Internal concentration resulting in 50\% effect (mass per volume)
+\item \code{E_max}, Maximum inhibition (-)
+\item \code{b}, Slope parameter (-)
 }
 }
 
 \subsection{Internal concentration (Toxicokinetics)}{
 \itemize{
-\item Permeability, \code{P} (cm d-1)
-\item Area per dry-weight ratio, \code{r_A_DW} (cm2 g-1)
-\item Fresh weight per dry weight ratio, \code{r_FW_DW} (-)
-\item Fresh weight density, \code{r_FW_V} (g cm-3)
-\item Dry weight per frond ratio, \code{r_DW_FN} (g dw)
-\item Partitioning coefficient plant:water, \code{K_pw} (-)
-\item Metabolisation rate, \code{k_met} (d-1)
+\item \code{P}, Permeability (cm d-1)
+\item \code{r_A_DW}, Area per dry-weight ratio (cm2 g-1)
+\item \code{r_FW_DW}, Fresh weight per dry weight ratio (-)
+\item \code{r_FW_V}, Fresh weight density (g cm-3)
+\item \code{r_DW_FN} Dry weight per frond ratio (g dw)
+\item \code{K_pw}, Partitioning coefficient plant:water (-)
+\item \code{k_met}, Metabolisation rate (d-1)
 }
 }
 
@@ -109,4 +109,12 @@ param_defaults(list(
 
 # Returns a list of required model parameters with all values set to NA
 param_new()
+}
+\references{
+Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
+Schmitt W., Hommen U., 2021: Refined description of the \emph{Lemna} TKTD growth model
+based on \emph{Schmitt et al.} (2013) – equation system and default parameters.
+Report of the working group \emph{Lemna} of the SETAC Europe Interest Group Effect
+Modeling. Version 1, uploaded on 22. Sept. 2021.
+\url{https://www.setac.org/group/SEIGEffectModeling}
 }

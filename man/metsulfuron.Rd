@@ -40,7 +40,7 @@ metsulfuron$envir$conc
 metsulfuron$envir
 }
 \references{
-Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic TK/TD-model
+Schmitt W., Bruns E., Dollinger M., Sowig P., 2013: Mechanistic TK/TD-model
 simulating the effect of growth inhibitors on \emph{Lemna} populations. Ecol Model
 255, pp. 1-10. \doi{10.1016/j.ecolmodel.2013.01.017}
 }

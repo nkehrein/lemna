@@ -5,12 +5,12 @@
 #' settings. Numerical integration is handled by [deSolve::lsoda()] by default
 #' which is well suited to handle stiff and non-stiff numerical problems.
 #'
-#' ## Initial state
+#' @section State variables:
 #' The model has two state variables:
-#' - Biomass, `BM` (g dw m-2)
-#' - Mass of toxicant in plant population, `M_int` (mass per m2, e.g. ug m-2)
+#' - `BM`, Biomass  (g dw m-2)
+#' - `M_int`, Mass of toxicant in plant population  (mass per m2, e.g. ug m-2)
 #'
-#' ## Output times
+#' @section Output times:
 #' The function will only return results for the requested time points. The solver
 #' may make additional time steps which are not returned, depending on the
 #' solver settings such as numerical tolerance. The number of output times and
@@ -18,11 +18,11 @@
 #' results. Please refer to the manual of the [deSolve] package for more
 #' information on that topic.
 #'
-#' ## Parameters
+#' @section Parameters:
 #' The list of available model parameters, their units, and suggested default
 #' values is documented in [param_defaults()].
 #'
-#' ## Environmental variables
+#' @section Environmental variables:
 #' The model requires a time series for each of the five environmental variables
 #' For ease of use, a time series can be represented by either a constant
 #' numeric value, a `data.frame` containing a time series, a character
@@ -30,11 +30,11 @@
 #' returning a value for a certain time point.
 #'
 #' The five environmental variables are as follows:
-#' - Exposure concentration, `conc` (mass per volume, e.g ug L-1)
-#' - Temperature, `tmp` (°C)
-#' - Irradiance, `irr` (kJ m-2 d-1)
-#' - Phosphorus concentration, `P` (mg P L-1)
-#' - Nitrogen concentration, `N` (mg N L-1)
+#' - `conc`, Exposure concentration (mass per volume, e.g ug L-1)
+#' - `tmp`, Temperature (deg C)
+#' - `irr`, Irradiance (kJ m-2 d-1)
+#' - `P`, Phosphorus concentration  (mg P L-1)
+#' - `N`, Nitrogen concentration  (mg N L-1)
 #'
 #' A `data.frame` containing a time series must consist of exactly two columns:
 #' The first column contains the time in days, the second column the environmental
@@ -55,7 +55,7 @@
 #' represents time and must return a single scalar value. Using a function
 #' in combination with the compiled code solver will raise an error.
 #'
-#' ## R vs. compiled code
+#' @section R vs. compiled code:
 #' The model can be simulated using pure *R* code (the default) or an implementation
 #' that uses the compiled code feature of [deSolve]. Compiled code is almost
 #' always significantly faster than pure *R*. The solver for compiled ODEs also
@@ -65,7 +65,7 @@
 #'
 #' To use the compiled code feature, set the argument `ode_mode = "c"`.
 #'
-#' ## Additional outputs
+#' @section Simulation output:
 #' For reasons of convenience, the return value contains by default two additional
 #' variables derived from simulation results: the internal concentration `C_int`
 #' as well as the number of fronds `FrondNo`. These can be disabled by setting
@@ -77,6 +77,31 @@
 #' of *Klein et al.* for more information on these variables and how they
 #' influence model behavior.
 #'
+#' The available output levels are as follows:
+#' - `nout >= 1`
+#'    - `C_int`, internal concentration (mass per volume)
+#' - `nout >= 2`
+#'    - `FrondNo`, frond number (-)
+#' - `nout >= 4`
+#'   - `f_loss`, respiration dependency function (-)
+#'   - `f_photo`, photosynthesis dependency function (-)
+#' - `nout >= 10`
+#'   - `fT_photo`, temperature response of photosynthesis (-)
+#'   - `fI_photo`, irradiance response of photosynthesis (-)
+#'   - `fP_photo`, phosphorus response of photosynthesis (-)
+#'   - `fN_photo`, nitrogen response of photosynthesis (-)
+#'   - `fBM_photo`, density response of photosynthesis (-)
+#'   - `fCint_photo`, concentration response of photosynthesis (-)
+#' - `nout >= 16`
+#'   - `C_int_unb`, unbound internal concentration (mass per volume)
+#'   - `C_ext`, external concentration (mass per volume)
+#'   - `Tmp`, temperature (deg C)
+#'   - `Irr`, irradiance (kJ m-2 d-1)
+#'   - `Phs`, Phosphorus concentration (mg P L-1)
+#'   - `Ntr`, Nitrogen concentration (mg N L-1)
+#' - `nout >= 18`
+#'   - `dBM`, biomass derivative (g dw m-2 d-1)
+#'   - `dM_int`, mass of toxicant in plants derivative (mass per m2 d-1)
 #'
 #' @param init initial state of the model variables
 #' @param times numeric vector, output times for which model results are returned
@@ -94,6 +119,15 @@
 #' @importFrom utils read.csv
 #' @importFrom deSolve ode
 #' @export
+#'
+#' @references
+#' Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
+#'   Schmitt W., Hommen U., 2021: Refined description of the *Lemna* TKTD growth model
+#'   based on *Schmitt et al.* (2013) – equation system and default parameters.
+#'   Report of the working group *Lemna* of the SETAC Europe Interest Group Effect
+#'   Modeling. Version 1, uploaded on 22. Sept. 2021.
+#'   <https://www.setac.org/group/SEIGEffectModeling>
+#'
 #' @examples
 #' # Simulate the metsulfuron example scenario
 #' lemna(metsulfuron)
@@ -288,26 +322,23 @@ lemna.lemna_scenario <- function(x, init, times, param, envir, ...) {
   lemna.default(init=init, times=times, param=param, envir=envir, ...)
 }
 
-#' Full access to ODE solver
+#' Access to the ODE solver
 #'
 #' This function can be used by external packages to access the ODE implemented
 #' in C without the surrounding sanity checks and data loading procedures.
-#' All parameters will be passed on to the solver. This structure may help
-#' avoiding CMD CHECK messages.
+#' All parameters will be passed on to the solver.
 #'
-#' @param nout optional `numerical`, number of additional output variables,
-#'    defaults to two
-#' @param ... additional parameters passed on to [deSolve::ode()]
+#' @param ... parameters passed on to [deSolve::ode()]
 #' @return result from [deSolve::ode()]
 #' @export
-lemna_desolve <- function(nout=2, ...) {
+lemna_desolve <- function(...) {
   # set names of additional output variables
   outnames <- c("C_int", "FrondNo", "f_loss", "f_photo", "fT_photo", "fI_photo",
                 "fP_photo", "fN_photo", "fBM_photo", "fCint_photo", "C_int_unb",
                 "C_ext", "Tmp", "Irr", "Phs", "Ntr", "dBM", "dM_int")
 
   ode(dllname="lemna", initfunc="lemna_init", func="lemna_func",
-     initforc="lemna_forc", nout=nout, outnames=outnames, ...)
+     initforc="lemna_forc", outnames=outnames, ...)
 }
 
 # Prepare environmental factor time series

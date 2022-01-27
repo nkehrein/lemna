@@ -59,10 +59,10 @@ plot(result)
 The package contains two vignettes that may help you getting started:
 
 -   [Introduction to the Lemna
-    package](https://nkehrein.github.io/lemna_web/lemna-introduction.html)<br />
+    package](https://nkehrein.github.io/lemna/lemna-introduction.html)<br />
     A general *Tutorial* and guide to the package functions
 -   [Lemna model
-    verification](https://nkehrein.github.io/lemna_web/lemna-verification.html)<br />
+    verification](https://nkehrein.github.io/lemna/lemna-verification.html)<br />
     A verification of the model implementation against results of the
     Schmitt *et al.* implementation. Contains advanced workflows of
     package features.
@@ -79,13 +79,13 @@ issue](https://github.com/nkehrein/lemna/issues) on GitHub.
 
 ## References
 
--   Klein J, Cedergreen N, Heine S, Reichenberger S, Rendal C, Schmitt
-    W, Hommen U. 2021. Refined description of the *Lemna* TKTD growth
-    model based on *Schmitt et al.* (2013) – equation system and default
-    parameters. Report of the working group *Lemna* of the SETAC Europe
-    Interest Group Effect Modeling. Version 1, uploaded on 22.
+-   Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
+    Schmitt W., Hommen U., 2021: Refined description of the *Lemna* TKTD
+    growth model based on *Schmitt et al.* (2013) – equation system and
+    default parameters. Report of the working group *Lemna* of the SETAC
+    Europe Interest Group Effect Modeling. Version 1, uploaded on 22.
     Sept. 2021. <https://www.setac.org/group/SEIGEffectModeling>
--   Schmitt W, Bruns E, Dollinger M, Sowig P. 2013. Mechanistic
+-   Schmitt W., Bruns E., Dollinger M., Sowig P., 2013: Mechanistic
     TK/TD-model simulating the effect of growth inhibitors on *Lemna*
     populations. Ecol Model 255, pp. 1-10. DOI:
     [10.1016/j.ecolmodel.2013.01.017](https://doi.org/10.1016/j.ecolmodel.2013.01.017)
