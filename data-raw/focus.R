@@ -7,7 +7,7 @@ focus_param <- within(param_defaults(), {
   # variable environmental conditions
   k_photo_fixed <- FALSE
   # growth model
-  BM_threshold <- 0
+  BM_min <- 0
   BM_L <- 176
   # toxicodynamics
   b <- 4.16

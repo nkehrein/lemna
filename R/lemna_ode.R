@@ -118,11 +118,6 @@ lemna_ode <- function(t, state, param) {
     ## Population growth
     ##
 
-    # If population size falls below threshold value, set BM=BM_min (Box 1)
-    if(BM < BM_threshold) {
-      BM <- BM_min
-    }
-
     # Growth model ODE (Box 1)
     dBM <- (k_photo_max * f_photo - k_loss * f_loss) * BM
     # avoid biomass decrease below BM_min

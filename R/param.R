@@ -8,8 +8,7 @@
 #' - `k_photo_fixed`, Model switch for unlimited growth conditions (TRUE/FALSE)
 #' - `k_photo_max`, Maximum photosynthesis rate (d-1)
 #' - `k_loss`, Reference loss rate (d-1)
-#' - `BM_threshold`, Lower biomass abundance threshold (g dw m-2)
-#' - `BM_min`, Reservoir for biomass recovery (g dw m-2)
+#' - `BM_min`, Threshold density for setting dBM/dt to zero (g dw m-2)
 #'
 #' ### Temperature response of photosynthesis
 #' - `T_opt`, Optimum growth temperature (deg C)
@@ -80,8 +79,7 @@ param_defaults <- function(values) {
     k_photo_fixed = FALSE, # model switch, if TRUE then f_loss = 1 and f_photo = fCint_photo()
     k_photo_max = 0.47,    # max photosynthesis rate (d-1)
     k_loss = 0.05,         # reference loss rate (d-1)
-    BM_threshold = 5e-4,   # lower biomass abundance threshold (g dw m-2)
-    BM_min = 0,            # reservoir for biomass recovery (g dw m-2)
+    BM_min = 5e-4,         # threshold density for setting dBM/dt to zero (g dw m-2)
 
     # response parameters
     T_opt = 26.7,   # optimum growth temperature (deg C)
@@ -132,7 +130,6 @@ param_new <- function(values) {
     k_photo_fixed = NA,
     k_photo_max = NA,
     k_loss = NA,
-    BM_threshold = NA,
     BM_min = NA,
 
     # response parameters

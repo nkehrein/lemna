@@ -20,11 +20,12 @@ published by Schmitt *et al.* (2013).
 ## Installation
 
 ``` r
-# install directly from CRAN
+## install directly from CRAN
 install.packages("lemna")
 
-# install latest development version from GitHub
-devtools::install_github("nkehrein/lemna")
+## install latest development version from GitHub
+#install.packages("remotes")
+remotes::install_github("nkehrein/lemna", dependencies=TRUE)
 ```
 
 ## Usage

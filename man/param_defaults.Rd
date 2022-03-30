@@ -26,8 +26,7 @@ Returns the default Lemna model parameters as reported by Klein et al. (2021).
 \item \code{k_photo_fixed}, Model switch for unlimited growth conditions (TRUE/FALSE)
 \item \code{k_photo_max}, Maximum photosynthesis rate (d-1)
 \item \code{k_loss}, Reference loss rate (d-1)
-\item \code{BM_threshold}, Lower biomass abundance threshold (g dw m-2)
-\item \code{BM_min}, Reservoir for biomass recovery (g dw m-2)
+\item \code{BM_min}, Threshold density for setting dBM/dt to zero (g dw m-2)
 }
 }
 

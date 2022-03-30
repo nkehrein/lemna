@@ -13,7 +13,7 @@
 /**
  * Allocate memory for global parameter array
  */
-static double parms[25];
+static double parms[24];
 /**
  * Allocate memory for forcing function data
  *
@@ -37,31 +37,30 @@ static double forc[5];
 #define k_photo_fixed parms[0]
 #define k_photo_max   parms[1]
 #define k_loss        parms[2]
-#define BM_threshold  parms[3]
-#define BM_min        parms[4]
+#define BM_min        parms[3]
 // response parameters
-#define T_opt         parms[5]
-#define T_min         parms[6]
-#define T_max         parms[7]
-#define Q10           parms[8]
-#define T_ref         parms[9]
-#define alpha         parms[10]
-#define beta          parms[11]
-#define N_50          parms[12]
-#define P_50          parms[13]
-#define BM_L          parms[14]
+#define T_opt         parms[4]
+#define T_min         parms[5]
+#define T_max         parms[6]
+#define Q10           parms[7]
+#define T_ref         parms[8]
+#define alpha         parms[9]
+#define beta          parms[10]
+#define N_50          parms[11]
+#define P_50          parms[12]
+#define BM_L          parms[13]
 // toxicodynamic parameters
-#define E_max         parms[15]
-#define EC50_int      parms[16]
-#define b             parms[17]
+#define E_max         parms[14]
+#define EC50_int      parms[15]
+#define b             parms[16]
 // toxicokinetic parameters
-#define P             parms[18]
-#define r_A_DW        parms[19]
-#define r_FW_DW       parms[20]
-#define r_FW_V        parms[21]
-#define r_DW_FN       parms[22]
-#define K_pw          parms[23]
-#define k_met         parms[24]
+#define P             parms[17]
+#define r_A_DW        parms[18]
+#define r_FW_DW       parms[19]
+#define r_FW_V        parms[20]
+#define r_DW_FN       parms[21]
+#define K_pw          parms[22]
+#define k_met         parms[23]
 // forcings by environmental variables
 #define C_ext forc[0]
 #define Tmp forc[1]
@@ -75,7 +74,7 @@ static double forc[5];
  */
 void lemna_init(void (* odeparms)(int *, double *))
 {
-  int N=25;
+  int N=24;
   odeparms(&N, parms);
 
 }
@@ -213,7 +212,7 @@ void lemna_func(int *neq, double *t, double *y, double *ydot, double *yout, int*
   //
 
   // Growth model ODE (Box 1)
-  dBM = (k_photo_max * f_photo - k_loss * f_loss) * (BM >= BM_threshold ? BM : BM_min);
+  dBM = (k_photo_max * f_photo - k_loss * f_loss) * BM;
   // avoid biomass decrease below BM_min
   if(BM <= BM_min && dBM < 0) {
     dBM = 0;

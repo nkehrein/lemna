@@ -3,7 +3,7 @@ metsulfuron_param <- within(param_defaults(), {
   # constant photosynthesis rates for backwards compatibility
   k_photo_fixed <- TRUE
   # growth model
-  BM_threshold <- 0
+  BM_min <- 0
   BM_L <- 176
   # toxicodynamics
   b <- 4.16
