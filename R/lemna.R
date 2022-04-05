@@ -204,10 +204,10 @@ lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mo
   # check initial state vector
   init_missing <- setdiff(c("BM", "M_int"), names(init))
   if(length(init_missing) > 0) {
-    stop(paste("init vector elements missing:", paste(init_missing, collapse=",")))
+    stop(paste("init vector elements missing:", paste(init_missing, collapse=",")), call. = FALSE)
   }
   if(length(init) != 2) {
-    stop("init vector has invalid length")
+    stop("init vector has invalid length", call. = FALSE)
   }
 
   # check output times argument
@@ -222,13 +222,19 @@ lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mo
   param <- as.list(param)
   param_missing <- setdiff(names(param_defaults()), names(param))
   if(length(param_missing) > 0) {
-    stop(paste("model parameters missing:", paste(param_missing, collapse=",")))
+    stop(paste("model parameters missing:", paste(param_missing, collapse=", ")), call. = FALSE)
+  }
+  # Prior to report version 2, the minimum biomass threshold was implemented using
+  # the two parameters `BM_threshold` and `BM_min`
+  if("BM_threshold" %in% names(param)) {
+    param$BM_min <- param$BM_threshold
+    warning("parameter BM_threshold was removed, setting BM_min = BM_threshold", call. = FALSE)
   }
 
   # prepare time series of environmental variables
   envir_missing <- setdiff(c("conc","tmp","irr","P","N"), names(envir))
   if(length(envir_missing) > 0) {
-    stop(paste("environmental factor(s) missing:",paste(envir_missing,collapse=",")))
+    stop(paste("environmental factor(s) missing:",paste(envir_missing,collapse=",")), call. = FALSE)
   }
   envir$conc <- prepare_envir("conc", envir) # exposure concentration
   envir$tmp <- prepare_envir("tmp", envir) # temperature
@@ -264,7 +270,7 @@ lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mo
       out$FrondNo <- out$BM / param$r_DW_FN
     }
     if(nout > 2) {
-      warning("additional outputs (nout > 2) only available for compiled ODE")
+      warning("additional outputs (nout > 2) only available for compiled ODE", call. = FALSE)
     }
   }
   else if(ode_mode == "c") {
@@ -288,7 +294,7 @@ lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mo
     out <- as.data.frame(out)
   }
   else {
-    stop("unknown ode mode")
+    stop("unknown ode mode", call. = FALSE)
   }
 
   class(out) <- c("lemna_result", class(out))
