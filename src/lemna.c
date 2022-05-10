@@ -1,6 +1,6 @@
 /*******************************************************************
  *
- * Lemna model as described by Klein et al. (2021)
+ * Lemna model as described by Klein et al. (2022)
  * SETAC Europe Interest Group Effect Modeling. Version 1.1
  *
  * The model provides additional output on intermediary variables on

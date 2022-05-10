@@ -17,7 +17,7 @@ defaults}
 named \code{list}
 }
 \description{
-Returns the default Lemna model parameters as reported by Klein et al. (2021).
+Returns the default Lemna model parameters as reported by Klein \emph{et al.} (2022).
 }
 \details{
 \subsection{Model parameters}{
@@ -110,10 +110,11 @@ param_defaults(list(
 param_new()
 }
 \references{
-Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
-Schmitt W., Hommen U., 2021: Refined description of the \emph{Lemna} TKTD growth model
-based on \emph{Schmitt et al.} (2013) – equation system and default parameters.
+Klein J., Cedergreen N., Heine S., Kehrein N., Reichenberger S., Rendal C.,
+Schmitt W., Hommen U., 2022: Refined description of the \emph{Lemna} TKTD growth model
+based on \emph{Schmitt et al.} (2013) – equation system and default parameters,
+implementation in R.
 Report of the working group \emph{Lemna} of the SETAC Europe Interest Group Effect
-Modeling. Version 1, uploaded on 22. Sept. 2021.
+Modeling. Version 1.1, uploaded on 09 May 2022.
 \url{https://www.setac.org/group/SEIGEffectModeling}
 }

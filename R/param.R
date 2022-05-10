@@ -1,6 +1,6 @@
 #' Default parameters
 #'
-#' Returns the default Lemna model parameters as reported by Klein et al. (2021).
+#' Returns the default Lemna model parameters as reported by Klein *et al.* (2022).
 #'
 #' ## Model parameters
 #'
@@ -50,11 +50,12 @@
 #' @export
 #'
 #' @references
-#' Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
-#'   Schmitt W., Hommen U., 2021: Refined description of the *Lemna* TKTD growth model
-#'   based on *Schmitt et al.* (2013) – equation system and default parameters.
+#' Klein J., Cedergreen N., Heine S., Kehrein N., Reichenberger S., Rendal C.,
+#'   Schmitt W., Hommen U., 2022: Refined description of the *Lemna* TKTD growth model
+#'   based on *Schmitt et al.* (2013) – equation system and default parameters,
+#'   implementation in R.
 #'   Report of the working group *Lemna* of the SETAC Europe Interest Group Effect
-#'   Modeling. Version 1, uploaded on 22. Sept. 2021.
+#'   Modeling. Version 1.1, uploaded on 09 May 2022.
 #'   <https://www.setac.org/group/SEIGEffectModeling>
 #'
 #' @examples

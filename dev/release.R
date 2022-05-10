@@ -14,7 +14,7 @@ devtools::document()
 devtools::install(upgrade="never", quick=TRUE)
 devtools::build_vignettes(quiet=FALSE, install=FALSE)
 if(!dir.exists("docs")) dir.create("docs")
-file.copy(list.files("doc", pattern="*.html", full.names=TRUE), "docs")
+file.copy(list.files("doc", pattern="\\.html$", full.names=TRUE), "docs", recursive=TRUE)
 unlink("doc", recursive = TRUE)
 
 # build package files

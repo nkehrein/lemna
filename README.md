@@ -14,8 +14,10 @@ default parameters to simulate the toxicokinetic-toxicodynamic (TKTD)
 model of the *Lemna* aquatic plant. *Lemna* is a standard test
 macrophyte used in ecotox effect studies. The model was described and
 published by the *SETAC Europe Interest Group Effect Modeling* (Klein
-*et al.* 2021). It is a refined description of the *Lemna* TKTD model
-published by Schmitt *et al.* (2013).
+*et al.* 2022). It is a refined description of the *Lemna* TKTD model
+published by Schmitt *et al.* (2013). This package contains the model’s
+reference implementation which is provided by the *SETAC* interest
+group.
 
 ## Installation
 
@@ -80,12 +82,13 @@ issue](https://github.com/nkehrein/lemna/issues) on GitHub.
 
 ## References
 
--   Klein J., Cedergreen N., Heine S., Reichenberger S., Rendal C.,
-    Schmitt W., Hommen U., 2021: Refined description of the *Lemna* TKTD
-    growth model based on *Schmitt et al.* (2013) – equation system and
-    default parameters. Report of the working group *Lemna* of the SETAC
-    Europe Interest Group Effect Modeling. Version 1, uploaded on 22.
-    Sept. 2021. <https://www.setac.org/group/SEIGEffectModeling>
+-   Klein J., Cedergreen N., Heine S., Kehrein N., Reichenberger S.,
+    Rendal C., Schmitt W., Hommen U., 2022: Refined description of the
+    *Lemna* TKTD growth model based on *Schmitt et al.* (2013) –
+    equation system and default parameters, implementation in R. Report
+    of the working group *Lemna* of the SETAC Europe Interest Group
+    Effect Modeling. Version 1.1, uploaded on 09 May 2022.
+    <https://www.setac.org/group/SEIGEffectModeling>
 -   Schmitt W., Bruns E., Dollinger M., Sowig P., 2013: Mechanistic
     TK/TD-model simulating the effect of growth inhibitors on *Lemna*
     populations. Ecol Model 255, pp. 1-10. DOI:

@@ -1,8 +1,6 @@
 #
 # Helper functions and setup
 #
-future::plan(future::multisession())
-
 # load Lemna model by Schmitt et al. (2013)
 source("mmc2.r", local=TRUE)
 source("mmc3.r", local=TRUE)
@@ -34,6 +32,9 @@ test_that("FOCUS D1 Ditch", {
   skip_on_covr()
   skip_on_cran()
   skip_if_not_installed("furrr")
+
+  # enable parallel processing for this and the following tests
+  future::plan(future::multisession())
 
   factors <- c(0, round(10^seq(0,2,0.2), 1))
   df_s <- furrr::future_map_dfr(factors, simulate_focus, model="schmitt", scenario=focusd1)
@@ -70,4 +71,7 @@ test_that("FOCUS R3 Stream", {
   df_kc <- furrr::future_map_dfr(factors, simulate_focus, model="klein", scenario=focusr3, ode_mode="c")
 
   expect_equal(df_kr, df_kc, tolerance=1e-4, ignore_attr=TRUE)
+
+  # disable parallel processing
+  future::plan(future::sequential())
 })
