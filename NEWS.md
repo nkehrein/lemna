@@ -1,4 +1,8 @@
-# lemna 1.0.0
+# lemna 1.0.1, 2023-04-22
+
+* Minor change to `lemna.c` to avoid compiler warnings on CRAN
+
+# lemna 1.0.0, 2022-05-10
 
 * Documentation adapted to reference report version 1.1
 * Added a warning message in case removed parameter `BM_threshold` is used

@@ -95,7 +95,7 @@ void lemna_forc(void (* odeforcs)(int *, double *))
  * @param T_ref ref temperature for response=1 (°C)
  * @return value from the interval [0,1]
  */
-double fT_loss() {
+double fT_loss(void) {
   return(pow(Q10, (Tmp - T_ref) / 10));
 }
 
@@ -106,7 +106,7 @@ double fT_loss() {
  * @param T_max maximum growth temperature (°C)
  * @return value from the interval [0,1]
  */
-double fT_photo() {
+double fT_photo(void) {
   double T_m = Tmp <= T_opt ? T_min : T_max;
   return(pow(10, -(Tmp - T_opt)*(Tmp - T_opt) / ((T_m - T_opt)*(T_m - T_opt))));
 }
@@ -117,7 +117,7 @@ double fT_photo() {
  * @param beta intercept of irradiance response of photosynthesis (-)
  * @return value from the interval [0,1]
  */
-double fI_photo() {
+double fI_photo(void) {
   return(fmin(1, alpha * Irr + beta));
 }
 
@@ -126,7 +126,7 @@ double fI_photo() {
  * @param N_50 half-saturation constant of Nitrogen response (mg N L-1)
  * @return value from the interval [0,1]
  */
-double fN_photo() {
+double fN_photo(void) {
   return(Ntr / (Ntr + N_50));
 }
 
@@ -135,7 +135,7 @@ double fN_photo() {
  * @param P_50 half-saturation constant of Phosphorus response (mg P L-1)
  * @return value from the interval [0,1]
  */
-double fP_photo() {
+double fP_photo(void) {
   return(Phs / (Phs + P_50));
 }
 

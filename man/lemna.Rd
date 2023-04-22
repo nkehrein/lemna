@@ -52,11 +52,11 @@ which is well suited to handle stiff and non-stiff numerical problems.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: All scenario parameters supplied as arguments
+\item \code{lemna(default)}: All scenario parameters supplied as arguments
 
-\item \code{lemna_scenario}: Scenario parameters supplied as a \code{lemna_scenario} object
+\item \code{lemna(lemna_scenario)}: Scenario parameters supplied as a \code{lemna_scenario} object
+
 }}
-
 \section{State variables}{
 
 The model has two state variables:

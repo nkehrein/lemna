@@ -41,11 +41,11 @@ Two endpoints are calculated which describe the effects on biomass:
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: All scenario parameters supplied as arguments
+\item \code{effect(default)}: All scenario parameters supplied as arguments
 
-\item \code{lemna_scenario}: Scenario parameters supplied as a \code{lemna_scenario} object
+\item \code{effect(lemna_scenario)}: Scenario parameters supplied as a \code{lemna_scenario} object
+
 }}
-
 \examples{
 # effects in sample scenario
 effect(metsulfuron)

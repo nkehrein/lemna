@@ -89,9 +89,9 @@ Returns the default Lemna model parameters as reported by Klein \emph{et al.} (2
 }
 \section{Functions}{
 \itemize{
-\item \code{param_new}: A parameter set without default values
-}}
+\item \code{param_new()}: A parameter set without default values
 
+}}
 \examples{
 # Returns default model parameters, some parameters are not defined (NA)
 param_defaults()
