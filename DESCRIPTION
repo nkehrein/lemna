@@ -35,5 +35,5 @@ Imports:
     ggplot2,
     gridExtra
 Depends: 
-    R (>= 3.60)
+    R (>= 3.6.0)
 VignetteBuilder: knitr
