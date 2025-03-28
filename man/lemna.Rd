@@ -15,6 +15,7 @@ lemna(...)
   envir,
   ode_mode = c("r", "c"),
   nout = 2,
+  hmax = 0.01,
   ...
 )
 
@@ -38,6 +39,9 @@ C are used, defaults to R}
 \item{nout}{numeric, controls the number of additional output variables of the
 model, such as \code{C_int} (internal concentration) or \code{FrondNo} (the number
 of fronds), see e.g. \code{\link[deSolve:lsoda]{deSolve::lsoda()}} for details. Defaults to \code{2}}
+
+\item{hmax}{numeric, maximum value of integration steps in time, see e.g.
+\code{\link[deSolve:lsoda]{deSolve::lsoda()}}. Defaults to \code{0.01}}
 
 \item{x}{a \code{lemna_scenario} object}
 }
@@ -72,7 +76,7 @@ The function will only return results for the requested time points. The solver
 may make additional time steps which are not returned, depending on the
 solver settings such as numerical tolerance. The number of output times and
 the distance between them can have influence on the numerical precision of
-results. Please refer to the manual of the \link{deSolve} package for more
+results. Please refer to the manual of the \link[deSolve:deSolve]{deSolve} package  for more
 information on that topic.
 }
 
@@ -122,7 +126,7 @@ in combination with the compiled code solver will raise an error.
 \section{R vs. compiled code}{
 
 The model can be simulated using pure \emph{R} code (the default) or an implementation
-that uses the compiled code feature of \link{deSolve}. Compiled code is almost
+that uses the compiled code feature of \link[deSolve:deSolve]{deSolve}. Compiled code is almost
 always significantly faster than pure \emph{R}. The solver for compiled ODEs also
 handles environmental variables better than the pure \emph{R} version. For optimal
 performance, the time series of environmental variables should always be as

@@ -15,7 +15,7 @@
 #' may make additional time steps which are not returned, depending on the
 #' solver settings such as numerical tolerance. The number of output times and
 #' the distance between them can have influence on the numerical precision of
-#' results. Please refer to the manual of the [deSolve] package for more
+#' results. Please refer to the manual of the [deSolve][deSolve::deSolve] package  for more
 #' information on that topic.
 #'
 #' @section Parameters:
@@ -57,7 +57,7 @@
 #'
 #' @section R vs. compiled code:
 #' The model can be simulated using pure *R* code (the default) or an implementation
-#' that uses the compiled code feature of [deSolve]. Compiled code is almost
+#' that uses the compiled code feature of [deSolve][deSolve::deSolve]. Compiled code is almost
 #' always significantly faster than pure *R*. The solver for compiled ODEs also
 #' handles environmental variables better than the pure *R* version. For optimal
 #' performance, the time series of environmental variables should always be as
@@ -113,6 +113,8 @@
 #' @param nout numeric, controls the number of additional output variables of the
 #'   model, such as `C_int` (internal concentration) or `FrondNo` (the number
 #'   of fronds), see e.g. [deSolve::lsoda()] for details. Defaults to `2`
+#' @param hmax numeric, maximum value of integration steps in time, see e.g.
+#'   [deSolve::lsoda()]. Defaults to `0.01`
 #' @param ... additional parameters passed on to [deSolve::ode()]
 #' @return `data.frame` with simulation results
 #' @importFrom stats approxfun
@@ -199,7 +201,8 @@ lemna <- function(...) {
 # Default method for simulation, all available info is given in the generic
 #' @describeIn lemna All scenario parameters supplied as arguments
 #' @export
-lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mode=c("r", "c"), nout=2, ...) {
+lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir,
+                          ode_mode=c("r", "c"), nout=2, hmax=0.01, ...) {
   ode_mode <- match.arg(ode_mode)
 
   # check initial state vector
@@ -291,7 +294,7 @@ lemna.default <- function(init=c("BM"=0, "M_int"=0), times, param, envir, ode_mo
     out <- ode(y=init, times=times, parms=param, forcings=envir,
                 dllname="lemna", initfunc="lemna_init", func="lemna_func",
                 initforc="lemna_forc", fcontrol=fcontrol, nout=nout,
-                outnames=outnames, ...)
+                outnames=outnames, hmax=hmax, ...)
     out <- as.data.frame(out)
   }
   else {
