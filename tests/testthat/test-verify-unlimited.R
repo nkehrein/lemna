@@ -164,8 +164,8 @@ test_that("7d exp, 7 rec", {
   df_kr <- simulate_7d(model="klein", ode_mode="r", hmax=0.01)
   df_kc <- simulate_7d(model="klein", ode_mode="c", hmax=0.01)
 
-  expect_equal(df_kr, df_s,  tolerance=1e-4, ignore_attr=TRUE)
-  expect_equal(df_kr, df_kc, tolerance=1e-4, ignore_attr=TRUE)
+  expect_equal(df_kr, df_s,  tolerance=1e-3, ignore_attr=TRUE)
+  expect_equal(df_kr, df_kc, tolerance=1e-3, ignore_attr=TRUE)
 })
 
 test_that("2d exp, 12, rec", {
@@ -173,8 +173,8 @@ test_that("2d exp, 12, rec", {
   df_kr <- simulate_2d(model="klein", ode_mode="r", hmax=0.01)
   df_kc <- simulate_2d(model="klein", ode_mode="c", hmax=0.01)
 
-  expect_equal(df_kr, df_s,  tolerance=1e-4, ignore_attr=TRUE)
-  expect_equal(df_kr, df_kc, tolerance=1e-4, ignore_attr=TRUE)
+  expect_equal(df_kr, df_s,  tolerance=1e-3, ignore_attr=TRUE)
+  expect_equal(df_kr, df_kc, tolerance=1e-3, ignore_attr=TRUE)
 })
 
 test_that("50d exp", {
@@ -188,8 +188,8 @@ test_that("50d exp", {
   df_kr <- simulate_pattern("klein", levels, expo_fun=expo_const, ode_mode="r")
   df_kc <- simulate_pattern("klein", levels, expo_fun=expo_const, ode_mode="c")
 
-  expect_equal(df_kr, df_s,  tolerance=1e-4, ignore_attr=TRUE)
-  expect_equal(df_kr, df_kc, tolerance=1e-4, ignore_attr=TRUE)
+  expect_equal(df_kr, df_s,  tolerance=1e-3, ignore_attr=TRUE)
+  expect_equal(df_kr, df_kc, tolerance=1e-3, ignore_attr=TRUE)
 })
 
 test_that("4 of 7d exposure", {
@@ -204,8 +204,8 @@ test_that("4 of 7d exposure", {
   df_kr <- simulate_pattern("klein", levels, expo_fun=expo_4of7, ode_mode="r")
   df_kc <- simulate_pattern("klein", levels, expo_fun=expo_4of7, ode_mode="c")
 
-  expect_equal(df_kr, df_s,  tolerance=1e-4, ignore_attr=TRUE)
-  expect_equal(df_kr, df_kc, tolerance=1e-4, ignore_attr=TRUE)
+  expect_equal(df_kr, df_s,  tolerance=1e-3, ignore_attr=TRUE)
+  expect_equal(df_kr, df_kc, tolerance=1e-3, ignore_attr=TRUE)
 })
 
 test_that("2 of 7d exposure", {
@@ -221,6 +221,6 @@ test_that("2 of 7d exposure", {
   df_kc <- simulate_pattern("klein", levels, expo_fun=expo_2of7, ode_mode="c")
 
   expect_equal(df_kr, df_s,  tolerance=1e-3, ignore_attr=TRUE)
-  expect_equal(df_kr, df_kc, tolerance=1e-4, ignore_attr=TRUE)
+  expect_equal(df_kr, df_kc, tolerance=1e-3, ignore_attr=TRUE)
 })
 

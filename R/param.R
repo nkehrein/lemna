@@ -44,6 +44,12 @@
 #' - `K_pw`, Partitioning coefficient plant:water (-)
 #' - `k_met`, Metabolisation rate (d-1)
 #'
+#' ## Model changes
+#'
+#' - *lemna* version 1.0.2
+#'    The default value of parameter `beta` is set to `0.25`. This reflects the
+#'    changes made to the (upcoming) SETAC working group report version 1.2.
+#'
 #' @param values optional named numeric `vector`, values will override any
 #'   defaults
 #' @return named `list`
@@ -89,7 +95,7 @@ param_defaults <- function(values) {
     Q10 = 2,        # temperature coefficient (-)
     T_ref = 25,     # ref temperature for response=1 (°C)
     alpha = 5e-5,   # slope of irradiance response of photosynthesis (m2 d kJ-1)
-    beta = 0.025,   # intercept of irradiance response of photosynthesis (-)
+    beta = 0.25,    # intercept of irradiance response of photosynthesis (-)
     N_50 = 0.034,   # half-saturation constant of Nitrogen response (mg N L-1)
     P_50 = 0.0043,  # half-saturation constant of Phosphorus response (mg P L-1)
     BM_L = 177,     # carrying capacity (g dw m-2)

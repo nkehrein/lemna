@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # lemna
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/nkehrein/lemna/workflows/R-CMD-check/badge.svg)](https://github.com/nkehrein/lemna/actions)
 <!-- badges: end -->
 
 ## Overview

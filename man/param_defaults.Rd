@@ -86,6 +86,14 @@ Returns the default Lemna model parameters as reported by Klein \emph{et al.} (2
 }
 
 }
+
+\subsection{Model changes}{
+\itemize{
+\item \emph{lemna} version 1.0.2
+The default value of parameter \code{beta} is set to \code{0.25}. This reflects the
+changes made to the (upcoming) SETAC working group report version 1.2.
+}
+}
 }
 \section{Functions}{
 \itemize{

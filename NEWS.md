@@ -1,3 +1,9 @@
+# lemna 1.0.2, 2025-
+
+* Default value of parameter `beta` modified due to typo in previous report
+  versions, now conforms with Klein et al. (2025), report version 1.2 (to be published);
+  new value: `beta=0.25`, old value: `beta=0.025`
+
 # lemna 1.0.1, 2023-04-22
 
 * Minor change to `lemna.c` to avoid compiler warnings on CRAN
