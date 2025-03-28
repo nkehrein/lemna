@@ -92,7 +92,7 @@ lemna_ode <- function(t, state, param) {
       C_int <- 0
       C_int_unb <- 0
     } else {
-      C_int <- M_int * r_FW_V / (BM * r_FW_DW)
+      C_int <- max(0, M_int * r_FW_V / (BM * r_FW_DW))
       C_int_unb <- C_int / K_pw # unbound internal concentration
     }
 
