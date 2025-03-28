@@ -57,13 +57,31 @@ effect.default <- function(init, times, param, envir, duration, ...) {
   # effect on biomass
   BM_exp <-  tail(out$BM, 1)
   BM_ctrl <- tail(ctrl$BM, 1)
-  BM_efx <- ifelse(BM_ctrl == 0, 0, 1 - BM_exp / BM_ctrl)
+  if(BM_ctrl> 0) {
+    BM_efx <- (BM_ctrl - BM_exp) / abs(BM_ctrl)
+  } else {
+    if(BM_exp == 0)
+      BM_efx <- 0
+    else if(BM_exp > 0)
+      BM_efx <- -Inf
+    else if(BM_exp < 0)
+      BM_efx <- Inf
+  }
 
   # effect on growth rate
   t_length <- max(times) - min(times)
   r_exp <-  log(BM_exp / out$BM[1]) / t_length
   r_ctrl <- log(BM_ctrl / ctrl$BM[1]) / t_length
-  r_efx <- ifelse(r_ctrl == 0, 0, min(1, 1 - r_exp / r_ctrl))
+  if(r_ctrl > 0) {
+    r_efx <- (r_ctrl - r_exp) / abs(r_ctrl)
+  } else {
+    if(r_exp == 0)
+      r_efx <- 0
+    else if(r_exp > 0)
+      r_efx <- -Inf
+    else if(r_exp < 0)
+      r_efx <- Inf
+  }
 
   c(
     BM = BM_efx * 100,
