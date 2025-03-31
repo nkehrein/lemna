@@ -1,7 +1,7 @@
 ---
 title: "Model verification"
 author: "Nils Kehrein"
-date: "31 March, 2025"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -13,7 +13,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 9,
+  fig.height = 5,
+  fig.align = "center"
+)
 
+# do not build vignette on package checks
+is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
+             "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
+knitr::opts_chunk$set(eval = !is_check)
+```
 
 ## Introduction
 
@@ -40,8 +53,7 @@ this package's GitHub repository but is not an official part of the package.
 Sourcing files  `mmc2.r` and `mmc3.r` gives access to the *Schmitt et al.* model
 equations as well as to the fitted parameter set for the substance *metsulfuron-methyl*.
 
-
-``` r
+```{r setup, warning=FALSE, message=FALSE}
 library(lemna)   # lemna model
 # load packages to ease plotting and data wrangling
 library(dplyr)   # for data preparation
@@ -56,15 +68,6 @@ calcgrowth(timepoints = 0:7,
            vars = c(BM = 0.0012, E=1, M_int=0),
            param = param, # default scenario data
            )
-#>   time          BM       M_int     C_int  FrondNo
-#> 1    0 0.001200000 0.000000000 0.0000000 12.00000
-#> 2    1 0.001284774 0.005436458 0.2533803 12.84774
-#> 3    2 0.001306316 0.009105453 0.4173850 13.06316
-#> 4    3 0.001314398 0.011494598 0.5236614 13.14398
-#> 5    4 0.001320074 0.013044177 0.5917003 13.20074
-#> 6    5 0.001324988 0.014053436 0.6351173 13.24988
-#> 7    6 0.001329581 0.014716554 0.6627886 13.29581
-#> 8    7 0.001334016 0.015158319 0.6804143 13.34016
 ```
 
 
@@ -82,8 +85,7 @@ Exposure lasts for seven days, followed by a seven day recovery period. Symbols
 show observed data and lines as calculated with fitted model parameters.
 
 
-
-``` r
+```{r 7d7d-schmitt}
 # simulate the 7d exposure, 7d recovery experiment
 simulate_7d <- function(model=c("schmitt","klein"), ...) {
   model <- match.arg(model)
@@ -142,19 +144,13 @@ ggplot(df_s)+
        title="Schmitt et al. model: 7d exposure, 7d recovery")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figure/7d7d-schmitt-1.png" alt="plot of chunk 7d7d-schmitt"  />
-<p class="caption">plot of chunk 7d7d-schmitt</p>
-</div>
-
 
 The depicted model dynamics of the *Schmitt et al.* are identical to published
 results. Simulating the same scenarios using the *Klein et al.* model yields
 identical dynamics:
 
 
-
-``` r
+```{r 7d7d-klein}
 # simulate using the Klein et al. model
 df_k <- simulate_7d(model="klein")
 
@@ -176,19 +172,13 @@ ggplot(df_k)+
        title="Klein et al. model: 7d exposure, 7d recovery")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figure/7d7d-klein-1.png" alt="plot of chunk 7d7d-klein"  />
-<p class="caption">plot of chunk 7d7d-klein</p>
-</div>
-
 
 A comparison of numerical values between the two models shows that simulated
 biomass deviates at most by 0.15%. A plot of relative errors describes small
 but consistent deviations in biomass results:
 
 
-
-``` r
+```{r 7d7d-dev}
 df_s %>%
   mutate(error = 100 * (df_k$BM/BM - 1)) %>%
   ggplot(aes(time, error, color=level)) +
@@ -196,12 +186,8 @@ df_s %>%
   theme_bw() +
   labs(x="Time (days)", y="Relative error (%)", color="Conc. (ug/L)",
        title="Deviation in biomass in Klein model relative to Schmitt")
-```
 
-<div class="figure" style="text-align: center">
-<img src="figure/7d7d-dev-1.png" alt="plot of chunk 7d7d-dev"  />
-<p class="caption">plot of chunk 7d7d-dev</p>
-</div>
+```
 
 
 The deviations are a result of imprecisions introduced by the numerical ODE solver.
@@ -212,8 +198,7 @@ is equivalent to a step length of about 15 minutes. This decreases the observed 
 significantly to a maximum of about 0.007%:
 
 
-
-``` r
+```{r 7d7d-relative}
 df_s <-  simulate_7d(model="schmitt", hmax=0.01)
 df_k <-  simulate_7d(model="klein", hmax=0.01)
 
@@ -224,12 +209,8 @@ df_s %>%
   theme_bw() +
   labs(x="Time (days)", y="Relative error (%)", color="Conc. (ug/L)",
        title="Deviation in biomass in Klein model relative to Schmitt, hmax=0.01")
-```
 
-<div class="figure" style="text-align: center">
-<img src="figure/7d7d-relative-1.png" alt="plot of chunk 7d7d-relative"  />
-<p class="caption">plot of chunk 7d7d-relative</p>
-</div>
+```
 
 It can be concluded that model dynamics and numerical results are identical
 as far as numerical precision allows.
@@ -244,8 +225,7 @@ of *metsulfuron-methyl*. Exposure lasts for two days, followed by a twelve day
 recovery period. Symbols show observed data and lines as calculated with fitted
 model parameters:
 
-
-``` r
+```{r 2d12d-klein}
 # simulate the 2d exposure, 12d recovery experiment
 simulate_2d <- function(model=c("schmitt","klein"), ...) {
   model <- match.arg(model)
@@ -306,18 +286,12 @@ ggplot(df_k)+
        title="Klein et al. model: 2d exposure, 12d recovery")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figure/2d12d-klein-1.png" alt="plot of chunk 2d12d-klein"  />
-<p class="caption">plot of chunk 2d12d-klein</p>
-</div>
-
 Observed model dynamics of the *Klein et al.* model are identical to published results
 and fit equally well with the observed frond numbers reported by *Hommen et al.*
 A comparison of numerical values of simulated biomass yields:
 
 
-
-``` r
+```{r 2d12d-relative}
 # simulate using the Schmitt et al. model
 df_s <-  simulate_2d(model="schmitt", hmax=0.01)
 # simulate using the Klein et al. model
@@ -329,7 +303,6 @@ df_s %>%
   pull(error) %>%
   abs() %>%
   max()
-#> [1] 0.004476714
 ```
 Numerical biomass values deviate at most by about 0.004% between the two models.
 It can be concluded that model dynamics and numerical results of both models
@@ -347,8 +320,7 @@ as well as repeating intervals of two days out of seven of exposure.
 
 First, the constant exposure pattern (Figure 4a) is simulated:
 
-
-``` r
+```{r complex}
 # simulate a specific exposure pattern
 simulate_pattern <- function(model=c("schmitt","klein"), levels, expo_fun, ...) {
   model <- match.arg(model)
@@ -410,16 +382,10 @@ ggplot(df_p1)+
        title="Klein et al. model: constant exposure")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figure/complex-1.png" alt="plot of chunk complex"  />
-<p class="caption">plot of chunk complex</p>
-</div>
-
 
 Next, the four out of seven days exposure pattern (Figure 4b) is simulated:
 
-
-``` r
+```{r 4d3d-klein}
 # exposure pattern: repeats 4d exposure, 3d recovery for 42 days,
 # followed by recovery for 8 days
 expo_4of7 <- function(conc=1) {
@@ -450,17 +416,11 @@ ggplot(df_p2)+
        title="Klein et al. model: 4 out of 7d of exposure")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figure/4d3d-klein-1.png" alt="plot of chunk 4d3d-klein"  />
-<p class="caption">plot of chunk 4d3d-klein</p>
-</div>
-
 
 Finally, the two out of seven days exposure pattern (Figure 4c) is simulated:
 
 
-
-``` r
+```{r 2d5d-klein}
 # exposure pattern: repeats 2d exposure, 5d recovery for 42 days,
 # followed by recovery for 8 days
 expo_2of7 <- function(conc=1) {
@@ -491,23 +451,16 @@ ggplot(df_p3)+
        title="Klein et al. model: 2 out of 7d of exposure")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="figure/2d5d-klein-1.png" alt="plot of chunk 2d5d-klein"  />
-<p class="caption">plot of chunk 2d5d-klein</p>
-</div>
-
 Comparing numerical results of the *Klein et al.* model with the *Schmitt et al.* implementation
 yields the following relative errors in percent:
 
-
-``` r
+```{r}
 # relative error (%) for the constant exposure pattern
 simulate_pattern(model="schmitt", levels=levels_const, expo_fun=expo_const) %>%
   mutate(error = 100 * (df_p1$BM/BM - 1)) %>%
   pull(error) %>%
   abs() %>%
   max()
-#> [1] 0.0005302434
 
 # relative error (%) for the 4 out of 7d exposure pattern
 simulate_pattern(model="schmitt", levels=levels_4of7, expo_fun=expo_4of7) %>%
@@ -515,7 +468,6 @@ simulate_pattern(model="schmitt", levels=levels_4of7, expo_fun=expo_4of7) %>%
   pull(error) %>%
   abs() %>%
   max()
-#> [1] 0.03496461
 
 # relative error (%) for the 2 out of 7d exposure pattern
 simulate_pattern(model="schmitt", levels=levels_2of7, expo_fun=expo_2of7) %>%
@@ -523,7 +475,6 @@ simulate_pattern(model="schmitt", levels=levels_2of7, expo_fun=expo_2of7) %>%
   pull(error) %>%
   abs() %>%
   max()
-#> [1] 0.02197463
 ```
 
 It can be observed that the *Klein et al.* model reproduces the same model dynamics
@@ -551,8 +502,7 @@ parameters follow the fitted parameters reported by *Schmitt et al.* (2013).
 The following code simulates *Lemna* population growth for the example FOCUS
 exposure pattern D1 Ditch multiplied by factors from 1 to 100:
 
-
-``` r
+```{r D1_rainbow, warning=FALSE, message=FALSE}
 library(tidyr)  # for additional data preparation
 library(furrr)  # for multi-threading capabilities
 
@@ -601,23 +551,10 @@ factors <- c(0, round(10^seq(0,2,0.2), 1))
 # simulate using the Schmitt et al. model
 df_s <- future_map_dfr(factors, simulate_focus, model="schmitt", scenario=focusd1)
 rainbow_plot(df_s, focusd1$envir$conc, 2000, "D1 Ditch: Schmitt et al. model, L. gibba")
-```
-
-<div class="figure" style="text-align: center">
-<img src="figure/D1_rainbow-1.png" alt="plot of chunk D1_rainbow"  />
-<p class="caption">plot of chunk D1_rainbow</p>
-</div>
-
-``` r
 # simulate using the Klein et al. model
 df_k <- future_map_dfr(factors, simulate_focus, model="klein", scenario=focusd1)
 rainbow_plot(df_k, focusd1$envir$conc, 2000, "D1 Ditch: Klein et al. model, L. gibba")
 ```
-
-<div class="figure" style="text-align: center">
-<img src="figure/D1_rainbow-2.png" alt="plot of chunk D1_rainbow"  />
-<p class="caption">plot of chunk D1_rainbow</p>
-</div>
 
 
 It can be observed that the *Klein et al.* model generates biomass dynamics that
@@ -626,8 +563,7 @@ values for each time point and multiplication factor yields the following
 graph:
 
 
-
-``` r
+```{r D1_deviation}
 bm_dev_plot <- function(res_klein, res_schmitt, title) {
   fs <- unique(res_klein$factor)
 
@@ -643,9 +579,6 @@ bm_dev_plot <- function(res_klein, res_schmitt, title) {
 }
 
 bm_dev_plot(df_k, df_s, "D1 Ditch")
-#> Error in `scale_color_manual()`:
-#> ! Continuous values supplied to discrete scale.
-#> ℹ Example values: 0, 0, 0, 0, and 0
 ```
 
 For D1 Ditch, the *Klein et al.* model shows a trend to a slightly larger biomass
@@ -665,8 +598,7 @@ of days with deviations from controls exceeding different magnitudes (% dev)
 depending on the exposure multiplication factor in the D1 Ditch scenario:
 
 
-
-``` r
+```{r D1_table}
 df_k %>%
   pivot_wider(id_cols=time, names_from=factor, values_from=BM) -> df.wide
 
@@ -685,23 +617,6 @@ df_k %>%
   knitr::kable()
 ```
 
-
-
-|% dev |  1| 1.6| 2.5|  4| 6.3|  10| 15.8| 25.1| 39.8| 63.1| 100|
-|:-----|--:|---:|---:|--:|---:|---:|----:|----:|----:|----:|---:|
-|> 1   |  0|   0|  15| 47|  68| 131|  149|  200|  209|  218| 231|
-|> 5   |  0|   0|   0| 20|  45|  66|  100|  126|  161|  179| 187|
-|> 10  |  0|   0|   0|  0|  29|  55|   75|  104|  115|  130| 142|
-|> 20  |  0|   0|   0|  0|  18|  35|   60|   81|   98|  107| 116|
-|> 30  |  0|   0|   0|  0|   0|  22|   47|   68|   81|   88|  98|
-|> 40  |  0|   0|   0|  0|   0|  17|   38|   55|   68|   76|  85|
-|> 50  |  0|   0|   0|  0|   0|   0|   25|   47|   56|   63|  71|
-|> 60  |  0|   0|   0|  0|   0|   0|    7|   34|   49|   56|  62|
-|> 70  |  0|   0|   0|  0|   0|   0|    0|   15|   34|   43|  48|
-|> 80  |  0|   0|   0|  0|   0|   0|    0|    0|    0|    0|   0|
-
-
-
 Predictions of the *Klein et al.* model are again very similar to the results
 reported by *Hommen et al.* (2015). The number of days with deviations do appear
 to have a small trend to lower numbers compared to the results of the *Schmitt et
@@ -715,34 +630,14 @@ by *Hommen et al.*
 Simulating *Lemna* population growth for the example FOCUS exposure pattern D2 Ditch
 multiplied by factors from 1 to 100:
 
-
-``` r
+```{r D2_rainbow}
 # simulate using the Schmitt et al. model
 df_s <- future_map_dfr(factors, simulate_focus, model="schmitt", scenario=focusd2)
 rainbow_plot(df_s, focusd2$envir$conc, 100, "D2 Ditch: Schmitt et al. model, L. gibba")
-```
-
-<div class="figure" style="text-align: center">
-<img src="figure/D2_rainbow-1.png" alt="plot of chunk D2_rainbow"  />
-<p class="caption">plot of chunk D2_rainbow</p>
-</div>
-
-``` r
 # simulate using the Klein et al. model
 df_k <- future_map_dfr(factors, simulate_focus, model="klein", scenario=focusd2)
 rainbow_plot(df_k, focusd2$envir$conc, 100, "D2 Ditch: Klein et al. model, L. gibba")
-```
-
-<div class="figure" style="text-align: center">
-<img src="figure/D2_rainbow-2.png" alt="plot of chunk D2_rainbow"  />
-<p class="caption">plot of chunk D2_rainbow</p>
-</div>
-
-``` r
 bm_dev_plot(df_k, df_s, "D2 Ditch")
-#> Error in `scale_color_manual()`:
-#> ! Continuous values supplied to discrete scale.
-#> ℹ Example values: 0, 0, 0, 0, and 0
 ```
 
 
@@ -761,37 +656,17 @@ model.
 Simulating *Lemna* population growth for the example FOCUS exposure pattern R3 Stream
 multiplied by factors from 1 to 1000:
 
-
-``` r
+```{r R3_rainbow}
 # multiplication factors for the exposure series
 factors <- c(0, round(10^seq(0,3,0.3), 1))
 
 # simulate using the Schmitt et al. model
 df_s <- future_map_dfr(factors, simulate_focus, model="schmitt", scenario=focusr3)
 rainbow_plot(df_s, focusr3$envir$conc, 1000, "R3 Stream: Schmitt et al. model, L. gibba")
-```
-
-<div class="figure" style="text-align: center">
-<img src="figure/R3_rainbow-1.png" alt="plot of chunk R3_rainbow"  />
-<p class="caption">plot of chunk R3_rainbow</p>
-</div>
-
-``` r
 # simulate using the Klein et al. model
 df_k <- future_map_dfr(factors, simulate_focus, model="klein", scenario=focusr3)
 rainbow_plot(df_k, focusr3$envir$conc, 1000, "R3 Stream: Klein et al. model, L. gibba")
-```
-
-<div class="figure" style="text-align: center">
-<img src="figure/R3_rainbow-2.png" alt="plot of chunk R3_rainbow"  />
-<p class="caption">plot of chunk R3_rainbow</p>
-</div>
-
-``` r
 bm_dev_plot(df_k, df_s, "R3 Stream")
-#> Error in `scale_color_manual()`:
-#> ! Continuous values supplied to discrete scale.
-#> ℹ Example values: 0, 0, 0, 0, and 0
 # disable multithreading
 future::plan("sequential")
 ```
@@ -809,8 +684,7 @@ identical as far as numerical precision allows. This is ensured by automated
 unit tests which are shipped as part of the *lemna* source package. The suite
 of verification tests can be run manually by:
 
-
-``` r
+```{r eval=FALSE}
 devtools::test(pkg="lemna", filter="verify")
 ```
 

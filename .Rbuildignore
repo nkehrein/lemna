@@ -4,6 +4,7 @@
 ^LICENSE\.md$
 ^data-raw$
 ^dev$
+
 # any outputs in package directory that may have been created during testing
 ^\w*\.png$
 ^\w*\.csv$
@@ -12,3 +13,6 @@
 ^docs$
 ^Meta$
 ^\.github$
+
+# do not compile/include vignettes which need to be pre-built
+^vignettes/orig/.*
