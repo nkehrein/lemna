@@ -90,7 +90,7 @@ issue](https://github.com/nkehrein/lemna/issues) on GitHub.
   system and default parameters, implementation in R. Report of the
   working group *Lemna* of the SETAC Europe Interest Group Effect
   Modeling. Version 1.1, uploaded on 09 May 2022.
-  <https://www.setac.org/group/SEIGEffectModeling>
+  <https://www.setac.org/group/effect-modeling.html>
 - Schmitt W., Bruns E., Dollinger M., Sowig P., 2013: Mechanistic
   TK/TD-model simulating the effect of growth inhibitors on *Lemna*
   populations. Ecol Model 255, pp. 1-10. DOI:

@@ -129,7 +129,7 @@
 #'   implementation in R.
 #'   Report of the working group *Lemna* of the SETAC Europe Interest Group Effect
 #'   Modeling. Version 1.1, uploaded on 09 May 2022.
-#'   <https://www.setac.org/group/SEIGEffectModeling>
+#'   <https://www.setac.org/group/effect-modeling.html>
 #'
 #' @examples
 #' # Simulate the metsulfuron example scenario

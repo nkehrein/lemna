@@ -124,5 +124,5 @@ based on \emph{Schmitt et al.} (2013) – equation system and default parameters
 implementation in R.
 Report of the working group \emph{Lemna} of the SETAC Europe Interest Group Effect
 Modeling. Version 1.1, uploaded on 09 May 2022.
-\url{https://www.setac.org/group/SEIGEffectModeling}
+\url{https://www.setac.org/group/effect-modeling.html}
 }
