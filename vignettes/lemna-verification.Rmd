@@ -140,10 +140,14 @@ ggplot(df_s)+
   theme_bw()+
   labs(x="Time (days)", y="Number of Fronds", color="Conc. (ug/L)",
        title="Schmitt et al. model: 7d exposure, 7d recovery")
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/7d7d-schmitt-1.png" alt="plot of chunk 7d7d-schmitt"  />
+<img src="verify_7d7d-schmitt-1.png" alt="plot of chunk 7d7d-schmitt"  />
 <p class="caption">plot of chunk 7d7d-schmitt</p>
 </div>
 
@@ -177,7 +181,7 @@ ggplot(df_k)+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/7d7d-klein-1.png" alt="plot of chunk 7d7d-klein"  />
+<img src="verify_7d7d-klein-1.png" alt="plot of chunk 7d7d-klein"  />
 <p class="caption">plot of chunk 7d7d-klein</p>
 </div>
 
@@ -199,7 +203,7 @@ df_s %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/7d7d-dev-1.png" alt="plot of chunk 7d7d-dev"  />
+<img src="verify_7d7d-dev-1.png" alt="plot of chunk 7d7d-dev"  />
 <p class="caption">plot of chunk 7d7d-dev</p>
 </div>
 
@@ -227,7 +231,7 @@ df_s %>%
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/7d7d-relative-1.png" alt="plot of chunk 7d7d-relative"  />
+<img src="verify_7d7d-relative-1.png" alt="plot of chunk 7d7d-relative"  />
 <p class="caption">plot of chunk 7d7d-relative</p>
 </div>
 
@@ -307,7 +311,7 @@ ggplot(df_k)+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/2d12d-klein-1.png" alt="plot of chunk 2d12d-klein"  />
+<img src="verify_2d12d-klein-1.png" alt="plot of chunk 2d12d-klein"  />
 <p class="caption">plot of chunk 2d12d-klein</p>
 </div>
 
@@ -411,7 +415,7 @@ ggplot(df_p1)+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/complex-1.png" alt="plot of chunk complex"  />
+<img src="verify_complex-1.png" alt="plot of chunk complex"  />
 <p class="caption">plot of chunk complex</p>
 </div>
 
@@ -451,7 +455,7 @@ ggplot(df_p2)+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/4d3d-klein-1.png" alt="plot of chunk 4d3d-klein"  />
+<img src="verify_4d3d-klein-1.png" alt="plot of chunk 4d3d-klein"  />
 <p class="caption">plot of chunk 4d3d-klein</p>
 </div>
 
@@ -492,7 +496,7 @@ ggplot(df_p3)+
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/2d5d-klein-1.png" alt="plot of chunk 2d5d-klein"  />
+<img src="verify_2d5d-klein-1.png" alt="plot of chunk 2d5d-klein"  />
 <p class="caption">plot of chunk 2d5d-klein</p>
 </div>
 
@@ -604,7 +608,7 @@ rainbow_plot(df_s, focusd1$envir$conc, 2000, "D1 Ditch: Schmitt et al. model, L.
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/D1_rainbow-1.png" alt="plot of chunk D1_rainbow"  />
+<img src="verify_D1_rainbow-1.png" alt="plot of chunk D1_rainbow"  />
 <p class="caption">plot of chunk D1_rainbow</p>
 </div>
 
@@ -615,7 +619,7 @@ rainbow_plot(df_k, focusd1$envir$conc, 2000, "D1 Ditch: Klein et al. model, L. g
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/D1_rainbow-2.png" alt="plot of chunk D1_rainbow"  />
+<img src="verify_D1_rainbow-2.png" alt="plot of chunk D1_rainbow"  />
 <p class="caption">plot of chunk D1_rainbow</p>
 </div>
 
@@ -687,18 +691,18 @@ df_k %>%
 
 
 
-|% dev |  1| 1.6| 2.5|  4| 6.3|  10| 15.8| 25.1| 39.8| 63.1| 100|
-|:-----|--:|---:|---:|--:|---:|---:|----:|----:|----:|----:|---:|
-|> 1   |  0|   0|  15| 47|  68| 131|  149|  200|  209|  218| 231|
-|> 5   |  0|   0|   0| 20|  45|  66|  100|  126|  161|  179| 187|
-|> 10  |  0|   0|   0|  0|  29|  55|   75|  104|  115|  130| 142|
-|> 20  |  0|   0|   0|  0|  18|  35|   60|   81|   98|  107| 116|
-|> 30  |  0|   0|   0|  0|   0|  22|   47|   68|   81|   88|  98|
-|> 40  |  0|   0|   0|  0|   0|  17|   38|   55|   68|   76|  85|
-|> 50  |  0|   0|   0|  0|   0|   0|   25|   47|   56|   63|  71|
-|> 60  |  0|   0|   0|  0|   0|   0|    7|   34|   49|   56|  62|
-|> 70  |  0|   0|   0|  0|   0|   0|    0|   15|   34|   43|  48|
-|> 80  |  0|   0|   0|  0|   0|   0|    0|    0|    0|    0|   0|
+|% dev |  1| 1.6| 2.5|  4| 6.3| 10| 15.8| 25.1| 39.8| 63.1| 100|
+|:-----|--:|---:|---:|--:|---:|--:|----:|----:|----:|----:|---:|
+|> 1   |  0|   0|   0|  0|   0|  0|    2|    8|    9|   10|  10|
+|> 5   |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 10  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 20  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 30  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 40  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 50  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 60  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 70  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|> 80  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
 
 
 
@@ -723,7 +727,7 @@ rainbow_plot(df_s, focusd2$envir$conc, 100, "D2 Ditch: Schmitt et al. model, L. 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/D2_rainbow-1.png" alt="plot of chunk D2_rainbow"  />
+<img src="verify_D2_rainbow-1.png" alt="plot of chunk D2_rainbow"  />
 <p class="caption">plot of chunk D2_rainbow</p>
 </div>
 
@@ -734,7 +738,7 @@ rainbow_plot(df_k, focusd2$envir$conc, 100, "D2 Ditch: Klein et al. model, L. gi
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/D2_rainbow-2.png" alt="plot of chunk D2_rainbow"  />
+<img src="verify_D2_rainbow-2.png" alt="plot of chunk D2_rainbow"  />
 <p class="caption">plot of chunk D2_rainbow</p>
 </div>
 
@@ -772,7 +776,7 @@ rainbow_plot(df_s, focusr3$envir$conc, 1000, "R3 Stream: Schmitt et al. model, L
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/R3_rainbow-1.png" alt="plot of chunk R3_rainbow"  />
+<img src="verify_R3_rainbow-1.png" alt="plot of chunk R3_rainbow"  />
 <p class="caption">plot of chunk R3_rainbow</p>
 </div>
 
@@ -783,7 +787,7 @@ rainbow_plot(df_k, focusr3$envir$conc, 1000, "R3 Stream: Klein et al. model, L. 
 ```
 
 <div class="figure" style="text-align: center">
-<img src="figure/R3_rainbow-2.png" alt="plot of chunk R3_rainbow"  />
+<img src="verify_R3_rainbow-2.png" alt="plot of chunk R3_rainbow"  />
 <p class="caption">plot of chunk R3_rainbow</p>
 </div>
 

@@ -19,7 +19,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 9,
   fig.height = 5,
-  fig.align = "center"
+  fig.align = "center",
+  fig.path = "verify_"
 )
 
 # do not build vignette on package checks
