@@ -4,14 +4,14 @@
 \alias{plot.lemna_result}
 \title{Plot a Lemna scenario result}
 \usage{
-\method{plot}{lemna_result}(x, y, munit = "ug/m2", cunit = "ug/L", legend = TRUE, ...)
+\method{plot}{lemna_result}(x, y, munit = "ng", cunit = "ug/L", legend = TRUE, ...)
 }
 \arguments{
 \item{x}{\code{lemna_result} object}
 
 \item{y}{unused parameter}
 
-\item{munit}{character, unit of internal mass, defaults to \code{ug/m2}}
+\item{munit}{character, unit of internal mass, defaults to \code{ng}}
 
 \item{cunit}{character, unit of exposure, defaults to \code{ug/L}}
 

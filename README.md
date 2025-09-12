@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/lemna)](https://cran.r-project.org/package=lemna)
 [![R-CMD-check](https://github.com/nkehrein/lemna/workflows/R-CMD-check/badge.svg)](https://github.com/nkehrein/lemna/actions)
 <!-- badges: end -->
 

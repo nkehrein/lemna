@@ -10,7 +10,7 @@
 #' @param x `lemna_result` object
 #' @param y unused parameter
 #' @param ... unused parameter
-#' @param munit character, unit of internal mass, defaults to `ug/m2`
+#' @param munit character, unit of internal mass, defaults to `ng`
 #' @param cunit character, unit of exposure, defaults to `ug/L`
 #' @param legend logical, if `TRUE` then a legend is displayed, set to `FALSE`
 #'   to hide legend, defaults to `TRUE`
@@ -29,7 +29,7 @@
 #'
 #' # Simulate and plot a scenario with changing environmental conditions
 #' plot(lemna(focusd1))
-plot.lemna_result <- function(x, y, munit="ug/m2", cunit="ug/L", legend=TRUE, ...) {
+plot.lemna_result <- function(x, y, munit="ng", cunit="ug/L", legend=TRUE, ...) {
   has_fronds <- "FrondNo" %in% names(x)
   has_cint <- "C_int" %in% names(x)
   legend.pos <- "none" # disables the legend of the concentration plot
@@ -77,7 +77,7 @@ plot.lemna_result <- function(x, y, munit="ug/m2", cunit="ug/L", legend=TRUE, ..
   # plot biomass
   ggplot2::ggplot(x, ggplot2::aes(.data[["time"]], .data[["BM"]])) +
     ggplot2::geom_line() +
-    ggplot2::labs(x="Time (days)", y="Biomass (g dw/m2)", title="Population size (BM)") +
+    ggplot2::labs(x="Time (days)", y="Biomass (g dw)", title="Population size (BM)") +
     ggplot2::theme_bw() -> plist$bm
 
   # plot fronds axis
