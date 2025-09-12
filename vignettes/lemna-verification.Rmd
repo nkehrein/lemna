@@ -1,7 +1,7 @@
 ---
 title: "Model verification"
 author: "Nils Kehrein"
-date: "31 March, 2025"
+date: "12 September, 2025"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -140,10 +140,6 @@ ggplot(df_s)+
   theme_bw()+
   labs(x="Time (days)", y="Number of Fronds", color="Conc. (ug/L)",
        title="Schmitt et al. model: 7d exposure, 7d recovery")
-#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-#> ℹ Please use `linewidth` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 <div class="figure" style="text-align: center">
@@ -636,10 +632,11 @@ bm_dev_plot <- function(res_klein, res_schmitt, title) {
   fs <- unique(res_klein$factor)
 
   res_schmitt %>%
-    mutate(error = 100 * (res_klein$BM/BM - 1)) %>%
+    mutate(error = 100 * (res_klein$BM/BM - 1), 
+           factor=factor(as.character(factor), levels=unique(as.character(factor)))) %>%
     ggplot(aes(time, error, color=factor)) +
     geom_point() +
-    scale_color_manual(values=setNames(c("black",rev(RColorBrewer::brewer.pal(length(fs) - 1, "Spectral"))), fs)) +
+    scale_color_manual(values=c("black",rev(RColorBrewer::brewer.pal(length(unique(res_schmitt$factor)) - 1, "Spectral")))) +
     scale_x_continuous(breaks=seq(0,390,30)) +
     theme_bw() +
     labs(x="Time (days)", y="Relative error (%)", color="Factor",
@@ -647,10 +644,12 @@ bm_dev_plot <- function(res_klein, res_schmitt, title) {
 }
 
 bm_dev_plot(df_k, df_s, "D1 Ditch")
-#> Error in `scale_color_manual()`:
-#> ! Continuous values supplied to discrete scale.
-#> ℹ Example values: 0, 0, 0, 0, and 0
 ```
+
+<div class="figure" style="text-align: center">
+<img src="verify_D1_deviation-1.png" alt="plot of chunk D1_deviation"  />
+<p class="caption">plot of chunk D1_deviation</p>
+</div>
 
 For D1 Ditch, the *Klein et al.* model shows a trend to a slightly larger biomass
 over the course of the simulated year. Achieved biomass levels are nevertheless very
@@ -691,18 +690,18 @@ df_k %>%
 
 
 
-|% dev |  1| 1.6| 2.5|  4| 6.3| 10| 15.8| 25.1| 39.8| 63.1| 100|
-|:-----|--:|---:|---:|--:|---:|--:|----:|----:|----:|----:|---:|
-|> 1   |  0|   0|   0|  0|   0|  0|    2|    8|    9|   10|  10|
-|> 5   |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 10  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 20  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 30  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 40  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 50  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 60  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 70  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
-|> 80  |  0|   0|   0|  0|   0|  0|    0|    0|    0|    0|   0|
+|% dev |  1| 1.6| 2.5|  4| 6.3|  10| 15.8| 25.1| 39.8| 63.1| 100|
+|:-----|--:|---:|---:|--:|---:|---:|----:|----:|----:|----:|---:|
+|> 1   |  0|   0|  15| 47|  68| 131|  149|  200|  209|  218| 231|
+|> 5   |  0|   0|   0| 20|  45|  66|  100|  126|  161|  179| 187|
+|> 10  |  0|   0|   0|  0|  29|  55|   75|  104|  115|  130| 142|
+|> 20  |  0|   0|   0|  0|  18|  35|   60|   81|   98|  107| 116|
+|> 30  |  0|   0|   0|  0|   0|  22|   47|   68|   81|   88|  98|
+|> 40  |  0|   0|   0|  0|   0|  17|   38|   55|   68|   76|  85|
+|> 50  |  0|   0|   0|  0|   0|   0|   25|   47|   56|   63|  71|
+|> 60  |  0|   0|   0|  0|   0|   0|    7|   34|   49|   56|  62|
+|> 70  |  0|   0|   0|  0|   0|   0|    0|   15|   34|   43|  48|
+|> 80  |  0|   0|   0|  0|   0|   0|    0|    0|    0|    0|   0|
 
 
 
@@ -744,10 +743,12 @@ rainbow_plot(df_k, focusd2$envir$conc, 100, "D2 Ditch: Klein et al. model, L. gi
 
 ``` r
 bm_dev_plot(df_k, df_s, "D2 Ditch")
-#> Error in `scale_color_manual()`:
-#> ! Continuous values supplied to discrete scale.
-#> ℹ Example values: 0, 0, 0, 0, and 0
 ```
+
+<div class="figure" style="text-align: center">
+<img src="verify_D2_rainbow-3.png" alt="plot of chunk D2_rainbow"  />
+<p class="caption">plot of chunk D2_rainbow</p>
+</div>
 
 
 Biomass dynamics and absolute numbers are again very similar to the behavior
@@ -793,9 +794,14 @@ rainbow_plot(df_k, focusr3$envir$conc, 1000, "R3 Stream: Klein et al. model, L. 
 
 ``` r
 bm_dev_plot(df_k, df_s, "R3 Stream")
-#> Error in `scale_color_manual()`:
-#> ! Continuous values supplied to discrete scale.
-#> ℹ Example values: 0, 0, 0, 0, and 0
+```
+
+<div class="figure" style="text-align: center">
+<img src="verify_R3_rainbow-3.png" alt="plot of chunk R3_rainbow"  />
+<p class="caption">plot of chunk R3_rainbow</p>
+</div>
+
+``` r
 # disable multithreading
 future::plan("sequential")
 ```

@@ -17,7 +17,8 @@ BugReports: https://github.com/nkehrein/lemna/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Roxygen: list(markdown = TRUE)
+Roxygen: list(markdown = TRUE, roclets = c("collate", "namespace", "rd",
+    "roxyglobals::global_roclet"))
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
@@ -28,7 +29,8 @@ Suggests:
     future,
     furrr,
     RColorBrewer,
-    microbenchmark
+    microbenchmark,
+    roxyglobals
 Config/testthat/edition: 3
 Imports: 
     deSolve,
@@ -37,3 +39,5 @@ Imports:
 Depends: 
     R (>= 3.6.0)
 VignetteBuilder: knitr
+Config/roxyglobals/filename: globals.R
+Config/roxyglobals/unique: FALSE

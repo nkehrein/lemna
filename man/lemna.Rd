@@ -73,7 +73,7 @@ The  units of the state variables \code{BM} and \code{M_int} are to be interpret
 as \emph{per vessel} in laboratory tests, and as \emph{per square meter} for field populations.
 The same interpretation applies to all parameters relating biomass and toxicant
 mass to other entities, such as parameters \code{BM_min} and \code{r_DW_FN}, see
-\code{\link[=param]{param()}} for details.
+\code{\link[=param_defaults]{param_defaults()}} for details.
 }
 
 \section{Output times}{

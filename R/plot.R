@@ -17,6 +17,7 @@
 #'
 #' @return a gridded plot
 #' @importFrom stats approx
+#' @autoglobal
 #' @export
 #' @examples
 #' # Simulate a sample scenario and plot results
@@ -32,8 +33,9 @@ plot.lemna_result <- function(x, y, munit="ug/m2", cunit="ug/L", legend=TRUE, ..
   has_fronds <- "FrondNo" %in% names(x)
   has_cint <- "C_int" %in% names(x)
   legend.pos <- "none" # disables the legend of the concentration plot
+  legend.posxy <- c(0.8, 0.8)
   if(legend) {
-    legend.pos <- c(0.8, 0.8)
+    legend.pos <- "inside"
   }
 
   plist <- list()
@@ -60,20 +62,20 @@ plot.lemna_result <- function(x, y, munit="ug/m2", cunit="ug/L", legend=TRUE, ..
   }
 
   # plot concentrations
-  ggplot2::ggplot(conc, ggplot2::aes_string("time", "conc", color="Compartment")) +
+  ggplot2::ggplot(conc, ggplot2::aes(.data[["time"]], .data[["conc"]], color=.data[["Compartment"]])) +
     ggplot2::geom_line() +
     ggplot2::labs(x="Time (days)", y=paste0("Concentration (",cunit,")"), title="Toxicant concentration") +
     ggplot2::theme_bw()+
-    ggplot2::theme(legend.position=legend.pos) -> plist$c
+    ggplot2::theme(legend.position=legend.pos, legend.position.inside=legend.posxy) -> plist$c
 
   # plot internal mass
-  ggplot2::ggplot(x, ggplot2::aes_string("time", "M_int")) +
+  ggplot2::ggplot(x, ggplot2::aes(.data[["time"]], .data[["M_int"]])) +
     ggplot2::geom_line() +
     ggplot2::labs(x="Time (days)", y=paste0("Internal mass (",munit,")"), title="Internal toxicant mass (M_int)") +
     ggplot2::theme_bw() -> plist$m
 
   # plot biomass
-  ggplot2::ggplot(x, ggplot2::aes_string("time", "BM")) +
+  ggplot2::ggplot(x, ggplot2::aes(.data[["time"]], .data[["BM"]])) +
     ggplot2::geom_line() +
     ggplot2::labs(x="Time (days)", y="Biomass (g dw/m2)", title="Population size (BM)") +
     ggplot2::theme_bw() -> plist$bm
@@ -81,7 +83,7 @@ plot.lemna_result <- function(x, y, munit="ug/m2", cunit="ug/L", legend=TRUE, ..
   # plot fronds axis
   if(has_fronds) {
     plist$bm <- plist$bm +
-      ggplot2::scale_y_continuous(sec.axis=ggplot2::sec_axis(trans=~./r_DW_FN, name="Number of Fronds (-)"))
+      ggplot2::scale_y_continuous(sec.axis=ggplot2::sec_axis(transform=~./r_DW_FN, name="Number of Fronds (-)"))
   }
 
   gridExtra::grid.arrange(

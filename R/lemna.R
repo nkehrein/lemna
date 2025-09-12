@@ -14,7 +14,7 @@
 #' as *per vessel* in laboratory tests, and as *per square meter* for field populations.
 #' The same interpretation applies to all parameters relating biomass and toxicant
 #' mass to other entities, such as parameters `BM_min` and `r_DW_FN`, see
-#' [param()] for details.
+#' [param_defaults()] for details.
 #'
 #' @section Output times:
 #' The function will only return results for the requested time points. The solver
