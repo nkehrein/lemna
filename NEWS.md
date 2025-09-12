@@ -1,3 +1,14 @@
+# lemna 1.0.3, 2025-09-12
+
+* Clarification of units according to Klein et al. report version 1.3:
+   * State variable `BM` has unit (*g dw*) per vessel for lab experiments,
+     and unit (*g dw m-2*) for field populations.
+   * State variable `M_int` has unit (*ng*).
+   * Parameters `BM_min`, `BM_L`, and `r_DW_FN` have unit (*g dw*) per vessel
+     for lab experiments, and unit (*g dw m-2*) for field populations.
+   * Parameter `EC50_int` has unit (*ug L-1*).
+   * Exposure concentrations must be provided as (*ug L-1*).
+
 # lemna 1.0.2, 2025-03-31
 
 * Default value of parameter `beta` modified due to typo in previous report

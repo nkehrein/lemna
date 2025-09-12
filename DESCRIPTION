@@ -1,6 +1,6 @@
 Package: lemna
 Title: Lemna Ecotox Effect Model
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: c(
     person("Nils", "Kehrein", , "nils.kehrein@gmail.com", c("aut", "cre")),
     person("SETAC Europe IG Effect Modeling", role="ccp")

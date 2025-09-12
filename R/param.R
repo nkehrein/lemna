@@ -1,6 +1,7 @@
 #' Default parameters
 #'
-#' Returns the default Lemna model parameters as reported by Klein *et al.* (2022).
+#' Returns the default Lemna model parameters as reported by Klein *et al.* (2021),
+#' version 1.3.
 #'
 #' ## Model parameters
 #'
@@ -8,12 +9,12 @@
 #' - `k_photo_fixed`, Model switch for unlimited growth conditions (TRUE/FALSE)
 #' - `k_photo_max`, Maximum photosynthesis rate (d-1)
 #' - `k_loss`, Reference loss rate (d-1)
-#' - `BM_min`, Threshold density for setting dBM/dt to zero (g dw m-2)
+#' - `BM_min`, Threshold density for setting dBM/dt to zero (g dw)
 #'
 #' ### Temperature response of photosynthesis
-#' - `T_opt`, Optimum growth temperature (deg C)
-#' - `T_min`, Minimum growth temperature (deg C)
-#' - `T_max`, Maximum growth temperature (deg C)
+#' - `T_opt`, Optimum growth temperature (°C)
+#' - `T_min`, Minimum growth temperature (°C)
+#' - `T_max`, Maximum growth temperature (°C)
 #'
 #' ### Temperature response of biomass loss rate
 #' - `Q10`, Temperature coefficient (-)
@@ -28,10 +29,10 @@
 #' - `P_50`, Half-saturation constant of Phosphorus (mg P L-1)
 #'
 #' ### Density dependence of photosynthesis
-#' - `BM_L`, Carrying capacity (g dw m-2)
+#' - `BM_L`, Carrying capacity (g dw)
 #'
 #' ### Concentration response (Toxicodynamics)
-#' - `EC50_int`, Internal concentration resulting in 50% effect (mass per volume)
+#' - `EC50_int`, Internal concentration resulting in 50% effect (ug L-1)
 #' - `E_max`, Maximum inhibition (-)
 #' - `b`, Slope parameter (-)
 #'
@@ -45,6 +46,13 @@
 #' - `k_met`, Metabolisation rate (d-1)
 #'
 #' ## Model changes
+#'
+#' - *lemna* version 1.0.3
+#'    Clarification of parameter units according to version 1.3 of Klein et al.:
+#'    Documented units of parameters `BM_min`, `BM_L`, and `r_DW_FN` refer to
+#'    lab experiments by default with quantities given *per vessel*. For field populations,
+#'    the parameters' units are (*g dw m-2*), i.e. biomass per square meter.
+#'    Parameter `EC50_int` needs to be provided as (*ug L-1*).
 #'
 #' - *lemna* version 1.0.2
 #'    The default value of parameter `beta` is set to `0.25`. This reflects the
@@ -86,19 +94,19 @@ param_defaults <- function(values) {
     k_photo_fixed = FALSE, # model switch, if TRUE then f_loss = 1 and f_photo = fCint_photo()
     k_photo_max = 0.47,    # max photosynthesis rate (d-1)
     k_loss = 0.05,         # reference loss rate (d-1)
-    BM_min = 5e-4,         # threshold density for setting dBM/dt to zero (g dw m-2)
+    BM_min = 5e-4,         # threshold density for setting dBM/dt to zero (g dw)
 
     # response parameters
-    T_opt = 26.7,   # optimum growth temperature (deg C)
-    T_min = 8,      # minimum growth temperature (deg C)
-    T_max = 40.5,   # maximum growth temperature (deg C)
+    T_opt = 26.7,   # optimum growth temperature (°C)
+    T_min = 8,      # minimum growth temperature (°C)
+    T_max = 40.5,   # maximum growth temperature (°C)
     Q10 = 2,        # temperature coefficient (-)
     T_ref = 25,     # ref temperature for response=1 (°C)
     alpha = 5e-5,   # slope of irradiance response of photosynthesis (m2 d kJ-1)
     beta = 0.25,    # intercept of irradiance response of photosynthesis (-)
     N_50 = 0.034,   # half-saturation constant of Nitrogen response (mg N L-1)
     P_50 = 0.0043,  # half-saturation constant of Phosphorus response (mg P L-1)
-    BM_L = 177,     # carrying capacity (g dw m-2)
+    BM_L = 177,     # carrying capacity (g dw)
 
     # toxicodynamic parameters
     E_max = 1,      # maximum inhibition (-), substance specific

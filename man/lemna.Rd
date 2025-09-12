@@ -65,9 +65,15 @@ which is well suited to handle stiff and non-stiff numerical problems.
 
 The model has two state variables:
 \itemize{
-\item \code{BM}, Biomass  (g dw m-2)
-\item \code{M_int}, Mass of toxicant in plant population  (mass per m2, e.g. ug m-2)
+\item \code{BM}, Biomass  (g dw)
+\item \code{M_int}, Mass of toxicant in plant population  (ng)
 }
+
+The  units of the state variables \code{BM} and \code{M_int} are to be interpreted
+as \emph{per vessel} in laboratory tests, and as \emph{per square meter} for field populations.
+The same interpretation applies to all parameters relating biomass and toxicant
+mass to other entities, such as parameters \code{BM_min} and \code{r_DW_FN}, see
+\code{\link[=param]{param()}} for details.
 }
 
 \section{Output times}{
@@ -96,8 +102,8 @@ returning a value for a certain time point.
 
 The five environmental variables are as follows:
 \itemize{
-\item \code{conc}, Exposure concentration (mass per volume, e.g ug L-1)
-\item \code{tmp}, Temperature (deg C)
+\item \code{conc}, Exposure concentration (ug L-1)
+\item \code{tmp}, Temperature (°C)
 \item \code{irr}, Irradiance (kJ m-2 d-1)
 \item \code{P}, Phosphorus concentration  (mg P L-1)
 \item \code{N}, Nitrogen concentration  (mg N L-1)
@@ -187,6 +193,15 @@ The available output levels are as follows:
 \item \code{dM_int}, mass of toxicant in plants derivative (mass per m2 d-1)
 }
 }
+\subsection{Model changes}{
+\itemize{
+\item \emph{lemna} version 1.0.3
+Clarification of parameter units according to version 1.3 of Klein et al.:
+The unit of state variable \code{BM}, biomass, is given as (\emph{g dw}) for lab
+experiments, and as (\emph{g dw m-2}) for field populations. State variable \code{M_int}
+has unit (\emph{ng}). The exposure concentration must be provided as (\emph{ug L-1}).
+}
+}
 }
 
 \examples{
@@ -255,10 +270,10 @@ lemna(scenario)
 }
 \references{
 Klein J., Cedergreen N., Heine S., Kehrein N., Reichenberger S., Rendal C.,
-Schmitt W., Hommen U., 2022: Refined description of the \emph{Lemna} TKTD growth model
+Schmitt W., Hommen U., 2021: Refined description of the \emph{Lemna} TKTD growth model
 based on \emph{Schmitt et al.} (2013) – equation system and default parameters,
 implementation in R.
 Report of the working group \emph{Lemna} of the SETAC Europe Interest Group Effect
-Modeling. Version 1.1, uploaded on 09 May 2022.
+Modeling. Version 1.3, September 2025.
 \url{https://www.setac.org/group/effect-modeling.html}
 }

@@ -7,8 +7,14 @@
 #'
 #' @section State variables:
 #' The model has two state variables:
-#' - `BM`, Biomass  (g dw m-2)
-#' - `M_int`, Mass of toxicant in plant population  (mass per m2, e.g. ug m-2)
+#' - `BM`, Biomass  (g dw)
+#' - `M_int`, Mass of toxicant in plant population  (ng)
+#'
+#' The  units of the state variables `BM` and `M_int` are to be interpreted
+#' as *per vessel* in laboratory tests, and as *per square meter* for field populations.
+#' The same interpretation applies to all parameters relating biomass and toxicant
+#' mass to other entities, such as parameters `BM_min` and `r_DW_FN`, see
+#' [param()] for details.
 #'
 #' @section Output times:
 #' The function will only return results for the requested time points. The solver
@@ -30,8 +36,8 @@
 #' returning a value for a certain time point.
 #'
 #' The five environmental variables are as follows:
-#' - `conc`, Exposure concentration (mass per volume, e.g ug L-1)
-#' - `tmp`, Temperature (deg C)
+#' - `conc`, Exposure concentration (ug L-1)
+#' - `tmp`, Temperature (°C)
 #' - `irr`, Irradiance (kJ m-2 d-1)
 #' - `P`, Phosphorus concentration  (mg P L-1)
 #' - `N`, Nitrogen concentration  (mg N L-1)
@@ -103,6 +109,15 @@
 #'   - `dBM`, biomass derivative (g dw m-2 d-1)
 #'   - `dM_int`, mass of toxicant in plants derivative (mass per m2 d-1)
 #'
+#' ## Model changes
+#'
+#' - *lemna* version 1.0.3
+#'    Clarification of parameter units according to version 1.3 of Klein et al.:
+#'    The unit of state variable `BM`, biomass, is given as (*g dw*) for lab
+#'    experiments, and as (*g dw m-2*) for field populations. State variable `M_int`
+#'    has unit (*ng*). The exposure concentration must be provided as (*ug L-1*).
+#'
+#'
 #' @param init initial state of the model variables
 #' @param times numeric vector, output times for which model results are returned
 #' @param param named list, Lemna model parameters
@@ -124,11 +139,11 @@
 #'
 #' @references
 #' Klein J., Cedergreen N., Heine S., Kehrein N., Reichenberger S., Rendal C.,
-#'   Schmitt W., Hommen U., 2022: Refined description of the *Lemna* TKTD growth model
+#'   Schmitt W., Hommen U., 2021: Refined description of the *Lemna* TKTD growth model
 #'   based on *Schmitt et al.* (2013) – equation system and default parameters,
 #'   implementation in R.
 #'   Report of the working group *Lemna* of the SETAC Europe Interest Group Effect
-#'   Modeling. Version 1.1, uploaded on 09 May 2022.
+#'   Modeling. Version 1.3, September 2025.
 #'   <https://www.setac.org/group/effect-modeling.html>
 #'
 #' @examples
